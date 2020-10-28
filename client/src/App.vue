@@ -1,16 +1,19 @@
 <template>
 	<div id="app">
+		<Sidebar />
 		<MemberComponent />
 	</div>
 </template>
 
 <script>
-import MemberComponent from './components/MemberComponent.vue';
+import MemberComponent from './components/pages/MemberComponent.vue';
+import Sidebar from './components/pages/SidebarComponent.vue';
 
 export default {
 	name: 'App',
 	components: {
 		MemberComponent,
+		Sidebar,
 	},
 };
 </script>
@@ -38,5 +41,6 @@ html {
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
 	margin-top: 60px;
+	display: flex;
 }
 </style>

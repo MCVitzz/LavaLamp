@@ -1,8 +1,8 @@
 <template>
 	<div class="card">
-		<div class="text">{{ member.name }}</div>
-		<div class="text">{{ member.role }}</div>
-		<div class="text">{{ member.email }}</div>
+		<div>{{ member.name }}</div>
+		<div>{{ member.role }}</div>
+		<div>{{ member.email }}</div>
 	</div>
 </template>
 <script>
@@ -17,11 +17,8 @@ export default {
 	padding: 4vh;
 	display: grid;
 	align-items: center;
-	grid-template-columns: 33% 33% 33%;
-	text-align: left;
+	grid-template-columns: repeat(3, 1fr);
 	width: 100%;
-}
-.text {
-	text-align: left;
+	font-size: 2vh;
 }
 </style>

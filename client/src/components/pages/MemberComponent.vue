@@ -4,9 +4,9 @@
 		<p class="error" v-if="error">{{ error }}</p>
 		<div class="members-container">
 			<div class="header">
-				<div class="headerColumn">Name</div>
-				<div class="headerColumn">Role</div>
-				<div class="headerColumn">E-mail</div>
+				<div>Name</div>
+				<div>Role</div>
+				<div>E-mail</div>
 			</div>
 			<MemberCardComponent
 				class="member"
@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import MemberService from '../services/MemberService';
+import MemberService from '../../services/MemberService';
 import MemberCardComponent from './MemberCardComponent';
 
 export default {
@@ -46,30 +46,29 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+@import '../../global';
+
 .header {
 	margin: 0vh auto 0vh;
 	width: 100%;
-	color: #fdfdfd;
+	color: $text-color;
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	padding: 0vh 4vh;
-}
-
-.headerColumn {
 	text-align: left;
 }
 
 .title {
 	text-align: left;
-	color: #fdfdfd;
+	color: $text-color;
 	margin: 1vh 0vh 4vh;
 	padding-left: 3vh;
 }
 
 .container {
 	margin: auto;
-	background: #2e2e2e;
+	background: $background;
 	padding: 4vh;
 	border-radius: 1.5vh;
 	width: 67%;
