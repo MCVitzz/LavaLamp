@@ -31,6 +31,11 @@ export default {
 	box-sizing: border-box;
 }
 
+*::selection {
+	color: #1c1c1c;
+	background: orange;
+}
+
 html {
 	background: #1c1c1c;
 }
