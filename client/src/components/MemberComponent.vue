@@ -1,29 +1,34 @@
 <template>
 	<div class="container">
-		<h1>Members</h1>
-		<hr />
+		<h1 class="title">Team</h1>
 		<p class="error" v-if="error">{{ error }}</p>
 		<div class="members-container">
-			<div
+			<div class="header">
+				<div class="headerColumn">Name</div>
+				<div class="headerColumn">Role</div>
+				<div class="headerColumn">E-mail</div>
+			</div>
+			<MemberCardComponent
 				class="member"
 				v-for="(member, index) in members"
 				v-bind:item="member"
 				v-bind:index="index"
 				v-bind:key="member._id"
-			>
-				<p class="text">
-					{{ member.name }} | {{ member.role }} | {{ member.email }}
-				</p>
-			</div>
+				v-bind:member="member"
+			></MemberCardComponent>
 		</div>
 	</div>
 </template>
 
 <script>
-import MemberService from '../MemberService';
+import MemberService from '../services/MemberService';
+import MemberCardComponent from './MemberCardComponent';
 
 export default {
 	name: 'MemberComponent',
+	components: {
+		MemberCardComponent,
+	},
 	data() {
 		return {
 			members: [],
@@ -41,34 +46,48 @@ export default {
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-	margin: 40px 0 0;
+.header {
+	margin: 0vh auto 0vh;
+	width: 100%;
+	color: #fdfdfd;
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	padding: 0vh 4vh;
 }
-ul {
-	list-style-type: none;
-	padding: 0;
+
+.headerColumn {
+	text-align: left;
 }
-li {
-	display: inline-block;
-	margin: 0 10px;
+
+.title {
+	text-align: left;
+	color: #fdfdfd;
+	margin: 1vh 0vh 4vh;
+	padding-left: 3vh;
 }
-a {
-	color: #42b983;
+
+.container {
+	margin: auto;
+	background: #2e2e2e;
+	padding: 4vh;
+	border-radius: 1.5vh;
+	width: 67%;
 }
 
 .members-container {
 	margin: auto;
-	background: #515151;
-	border-radius: 1.5vh;
 	padding: 1vh;
-	width: 30%;
+	border-spacing: 0;
+	border-radius: 1.5vh;
+	display: grid;
 }
 
 .member {
-	padding-left: 2vh;
-	text-align: center;
+	margin: 1vh auto 2vh;
+	background: #515151;
+	border-radius: 1.5vh;
+	text-align: left;
 	color: #dfdfdf;
 }
 </style>

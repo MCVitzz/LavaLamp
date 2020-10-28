@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<MemberComponent msg="Welcome to Your Vue.js App" />
+		<MemberComponent />
 	</div>
 </template>
 
@@ -16,12 +16,27 @@ export default {
 </script>
 
 <style>
+@font-face {
+	font-family: 'Montserrat';
+	src: local('Montserrat'),
+		url(./assets/fonts/Montserrat/Montserrat-Regular.ttf) format('truetype');
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+html {
+	background: #1c1c1c;
+}
+
 #app {
-	font-family: Avenir, Helvetica, Arial, sans-serif;
+	font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;
-	color: #2c3e50;
 	margin-top: 60px;
 }
 </style>
