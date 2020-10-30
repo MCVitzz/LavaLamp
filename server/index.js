@@ -1,4 +1,6 @@
 const express = require('express');
+const path = require('path');
+const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
 const cors = require('cors');
 
@@ -11,12 +13,9 @@ app.use(cors());
 const members = require('./routes/api/members');
 app.use('/api/members', members);
 
-//Production Environment
-if (process.env.NODE_ENV === 'production') {
-    app.use(express.static(__dirname, + '/public/'));
-
-    //Handle SPA
-    app.get(/.*/, (req, res) => res.sendFile(__dirname + '/public/index.html'));
+// Production Environment
+if (process.env.NODE_ENV != 'production') {
+    app.use(serveStatic(__dirname + '/public'));
 }
 
 
