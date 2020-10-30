@@ -14,9 +14,7 @@ const members = require('./routes/api/members');
 app.use('/api/members', members);
 
 // Production Environment
-if (process.env.NODE_ENV != 'production') {
-    app.use(serveStatic(__dirname + '/public'));
-}
+app.use(serveStatic(__dirname + '/public'));
 
 
 const port = process.env.PORT || 5000;
