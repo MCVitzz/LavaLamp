@@ -22,12 +22,14 @@ export default {
 @import '../../global.scss';
 
 .sidebar {
+	margin-top: 6vh;
 	border-radius: 0 1.5vh 1.5vh 0;
 	left: 0;
 	background: $background;
 	color: $text-color;
 	display: flex;
 	text-align: left;
+	max-height: 60%;
 }
 .items {
 	height: 100%;

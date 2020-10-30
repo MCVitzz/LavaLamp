@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const url = 'http://localhost:5000/api/members/';
+const url = '/api/members/';
 
 /* eslint-disable no-async-promise-executor */
 

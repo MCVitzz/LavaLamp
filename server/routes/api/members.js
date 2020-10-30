@@ -46,6 +46,6 @@ const ms = [{
     name: 'Rui Patrício',
     role: 'Goalkeeper',
     email: 'rpatricio@wolves.com'
-}];
+},];
 
 module.exports = router;

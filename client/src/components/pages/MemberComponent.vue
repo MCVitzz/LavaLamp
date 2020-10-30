@@ -67,11 +67,13 @@ export default {
 }
 
 .container {
-	margin: auto;
+	margin: 6vh auto;
 	background: $background;
 	padding: 4vh;
 	border-radius: 1.5vh;
 	width: 67%;
+	max-height: 67%;
+	height: min-content;
 }
 
 .members-container {
