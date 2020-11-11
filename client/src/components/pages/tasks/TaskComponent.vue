@@ -21,7 +21,7 @@
 				:model="task.dueDate"
 			/>
 			<div v-on:click="showPriority" class="field dialog-container">
-				<div class="dialog" v-if="editPriority">
+				<div class="dialog" v-if="editPriority" v-click-outside="hidePriority">
 					<div class="dialog-item first-item">High</div>
 					<div class="dialog-item">Medium</div>
 					<div class="dialog-item last-item">Low</div>
@@ -78,6 +78,33 @@ export default {
 		showPriority: function() {
 			this.requestEdit(this.index);
 			this.editPriority = true;
+		},
+		hidePriority: function() {
+			if (this.editPriority) this.editPriority = false;
+		},
+	},
+	directives: {
+		clickOutside: {
+			bind(el, binding) {
+				el.__ClickOutsideHandler__ = (event) => {
+					if (
+						!(
+							el === event.target ||
+							el.contains(event.target) ||
+							event.target === el.parentNode ||
+							event.target === el.nextSibling
+						)
+					) {
+						console.log(el.parentNode);
+						console.log('clicked outside!');
+						binding.value(event);
+					}
+				};
+				document.body.addEventListener('click', el.__ClickOutsideHandler__);
+			},
+			unbind(el) {
+				document.body.removeEventListener('click', el.__ClickOutsideHandler__);
+			},
 		},
 	},
 };

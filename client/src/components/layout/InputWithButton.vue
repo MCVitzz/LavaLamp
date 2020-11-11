@@ -1,5 +1,5 @@
 <template>
-	<div class="input-with-button">
+	<div class="d-flex">
 		<Textbox
 			class="full-row"
 			:model="textboxValue"
@@ -9,7 +9,7 @@
 			@keyUp="txtKeyUp"
 		/>
 		<transition :duration="1000" name="slide">
-			<div v-if="isActive" v-on:click="submit" class="button">
+			<div v-if="isActive" v-on:click="submit" class="btn-primary">
 				{{ text }}
 			</div>
 		</transition>
@@ -50,17 +50,6 @@ export default {
 </script>
 <style lang="scss" scoped>
 @import '../../global';
-
-.input-with-button {
-	display: flex;
-}
-
-.button {
-	margin: 1vh 1vh 1vh 0vh;
-	padding: 1vh 2vh;
-	background: orangered;
-	cursor: pointer;
-}
 
 .slide-enter-active {
 	transition: all 0.3s ease;
