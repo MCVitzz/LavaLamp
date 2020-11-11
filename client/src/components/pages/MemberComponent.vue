@@ -68,7 +68,7 @@ export default {
 
 .container {
 	margin: 6vh auto;
-	background: $background;
+	background: $second-background-color;
 	padding: 4vh;
 	border-radius: 1.5vh;
 	width: 67%;

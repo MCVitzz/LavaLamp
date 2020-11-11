@@ -1,34 +1,36 @@
 <template>
 	<div id="app">
 		<Sidebar />
-		<MemberComponent />
+		<TaskViewComponent />
 	</div>
 </template>
 
 <script>
-import MemberComponent from './components/pages/MemberComponent.vue';
+import TaskViewComponent from './components/pages/tasks/TaskViewComponent.vue';
 import Sidebar from './components/pages/SidebarComponent.vue';
 
 export default {
 	name: 'App',
 	components: {
-		MemberComponent,
+		TaskViewComponent,
 		Sidebar,
 	},
 };
 </script>
+<style lang="scss">
+@import './global';
 
-<style>
 @font-face {
 	font-family: 'Montserrat';
 	src: local('Montserrat'),
-		url(./assets/fonts/Montserrat/Montserrat-Regular.ttf) format('truetype');
+		url('./assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
 }
 
 * {
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
+	font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
 }
 
 *::selection {
@@ -37,11 +39,10 @@ export default {
 }
 
 html {
-	background: #1c1c1c;
+	background: $background-color;
 }
 
 #app {
-	font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
 	text-align: center;

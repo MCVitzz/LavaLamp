@@ -14,7 +14,8 @@
     "core-js": "^3.6.5",
     "node-sass": "^4.14.1",
     "sass-loader": "^10.0.4",
-    "vue": "^2.6.11"
+    "vue": "^2.6.11",
+    "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
