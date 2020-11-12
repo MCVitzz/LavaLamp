@@ -2,6 +2,7 @@
 	<div class="frame">
 		<div class="tasks-container">
 			<div class="headers">
+				<div class="header"></div>
 				<div class="header">Title</div>
 				<div class="header">Due</div>
 				<div class="header">Priority</div>
@@ -16,6 +17,7 @@
 					v-bind:task="item"
 					v-bind:requestEdit="requestEdit"
 					v-bind:editTask="editTask"
+					@deleteTask="deleteTask"
 				/>
 				<InputWithButton
 					class="unoficial-item"
@@ -60,6 +62,11 @@ export default {
 		},
 		editTask: async function(task) {
 			let res = await TaskServices.updateTask(task);
+			if (res == 'OK') this.items = await TaskServices.getAllTasks();
+			else alert(res);
+		},
+		deleteTask: async function(task) {
+			let res = await TaskServices.deleteTask(task);
 			if (res == 'OK') this.items = await TaskServices.getAllTasks();
 			else alert(res);
 		},
@@ -114,14 +121,14 @@ export default {
 .tasks-container {
 	color: white;
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 6fr 6fr 6fr;
 	grid-template-rows: max-content;
 }
 
 .headers,
 /deep/ .item {
 	display: grid;
-	grid-template-columns: 1fr 1fr 1fr;
+	grid-template-columns: 1fr 6fr 6fr 6fr;
 }
 
 .headers {
@@ -130,7 +137,7 @@ export default {
 
 .headers,
 .items {
-	grid-column: 1 / 4;
+	grid-column: 1 / 5;
 }
 
 .header {
@@ -138,16 +145,14 @@ export default {
 	font-size: 1.2em;
 }
 
-.header,
-/deep/ .field {
+.header {
 	padding: 1vh;
 	margin: 1vh;
 	text-align: left;
 }
 
-/deep/ .item,
-/deep/ .unoficial-item {
-	border-bottom: 1px solid #1c1c1c;
+.unoficial-item {
+	border-bottom: 1px solid $second-background-color;
 }
 
 /deep/ .main {

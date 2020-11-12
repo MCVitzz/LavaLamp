@@ -89,6 +89,7 @@ export default {
 	padding: 0 !important;
 	width: 100%;
 	background: transparent;
+	cursor: pointer;
 	color: white;
 	font-size: 1.1em;
 	border: 0;

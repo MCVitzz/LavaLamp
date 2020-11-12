@@ -1,12 +1,13 @@
 <template>
-	<div>
+	<div class="container">
 		<div class="item">
+			<IconButton @click="toggleDetail" :icon="getIcon()" />
 			<Textbox
 				class="main"
 				ref="txtTitle"
 				:model="task.title"
 				:value="task.title"
-				v-if="edit"
+				v-if="edit || detail"
 				@keyUp="keyUpTxtTitle"
 				@blur="confirm"
 			/>
@@ -22,30 +23,45 @@
 			/>
 			<div v-on:click="showPriority" class="field dialog-container">
 				<div class="dialog" v-if="editPriority" v-click-outside="hidePriority">
-					<div class="dialog-item first-item">High</div>
-					<div class="dialog-item">Medium</div>
-					<div class="dialog-item last-item">Low</div>
+					<div
+						class="dialog-item first-item"
+						v-on:click="changePriority('High')"
+					>
+						High
+					</div>
+					<div class="dialog-item" v-on:click="changePriority('Medium')">
+						Medium
+					</div>
+					<div class="dialog-item last-item" v-on:click="changePriority('Low')">
+						Low
+					</div>
 				</div>
-				<div>High</div>
+				<div>{{ task.priority }}</div>
 			</div>
 		</div>
+		<TaskDetailComponent v-if="detail" @deleteTask="deleteTask" />
 	</div>
 </template>
 <script>
 import Datepicker from '../../layout/Datepicker';
 import Textbox from '../../layout/Textbox';
+import IconButton from '../../layout/IconButton';
+import TaskDetailComponent from './TaskDetailComponent';
 
 export default {
 	name: 'TaskComponent',
 	components: {
 		Datepicker,
 		Textbox,
+		IconButton,
+		TaskDetailComponent,
 	},
 	props: ['task', 'index', 'requestEdit', 'editTask'],
 	data() {
 		return {
 			edit: false,
 			editPriority: false,
+			detail: false,
 		};
 	},
 	methods: {
@@ -55,6 +71,11 @@ export default {
 				this.$refs['txtTitle'].focus();
 			});
 		},
+		changePriority: function(newPriority) {
+			this.hidePriority();
+			this.task.priority = newPriority;
+			this.editTask(this.task);
+		},
 		dueClick: function() {
 			this.editClick();
 		},
@@ -63,6 +84,7 @@ export default {
 			this.requestEdit(this.index);
 		},
 		removeClick: function() {
+			this.detail = false;
 			this.edit = false;
 			this.editPriority = false;
 		},
@@ -82,6 +104,22 @@ export default {
 		hidePriority: function() {
 			if (this.editPriority) this.editPriority = false;
 		},
+		toggleDetail: function() {
+			if (this.detail) {
+				this.detail = false;
+				this.edit = false;
+			} else {
+				this.detail = true;
+				this.edit = true;
+				this.requestEdit(this.index);
+			}
+		},
+		getIcon: function() {
+			return this.detail ? 'chevron-down' : 'chevron-right';
+		},
+		deleteTask: function() {
+			this.$emit('deleteTask', this.task);
+		},
 	},
 	directives: {
 		clickOutside: {
@@ -95,8 +133,6 @@ export default {
 							event.target === el.nextSibling
 						)
 					) {
-						console.log(el.parentNode);
-						console.log('clicked outside!');
 						binding.value(event);
 					}
 				};
@@ -113,8 +149,15 @@ export default {
 <style lang="scss" scoped>
 @import '../../../global';
 
+.container {
+	border-bottom: 1px solid $second-background-color;
+}
+
 .field {
 	cursor: pointer;
+	padding: 1vh;
+	margin: 1vh;
+	text-align: left;
 	&:hover {
 		background: rgba($color: transparent, $alpha: 0.1);
 		transition: ease-in-out 0.1s;
@@ -125,6 +168,10 @@ input {
 	background: rgba($color: transparent, $alpha: 0.1) !important;
 	padding: 1vh !important;
 	margin: 1vh !important;
+	outline: 1px solid orangered;
+	&:hover {
+		outline: 1px solid orangered;
+	}
 	&:focus {
 		outline: 1px solid orangered;
 	}
@@ -155,5 +202,21 @@ input {
 		background: rgba(0, 0, 0, 0.5);
 		color: $text-color;
 	}
+}
+
+.toggle-detail {
+	margin: 1vh;
+	padding: 1vh;
+	cursor: pointer;
+	text-align: center;
+	&:hover {
+		background: rgba($color: transparent, $alpha: 0.1);
+		transition: ease-in-out 0.1s;
+	}
+}
+
+.icon {
+	color: $text-color;
+	margin: auto;
 }
 </style>

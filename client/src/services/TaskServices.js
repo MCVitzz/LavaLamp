@@ -60,6 +60,22 @@ class TaskServices {
             console.error(err);
         }
     }
+
+    //Delete Task
+    static async deleteTask(task) {
+        try {
+            const res = await axios.delete(`${url}/delete/${task._id}`);
+            if (res.status == 200) {
+                return 'OK';
+            }
+            else {
+                return res;
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+    }
 }
 
 export default TaskServices;

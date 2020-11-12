@@ -66,7 +66,7 @@ router.put('/update/:id', async (req, res) => {
 });
 
 //Delete task
-router.delete('/delete', async (req, res) => {
+router.delete('/delete/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
