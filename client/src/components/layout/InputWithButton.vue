@@ -2,14 +2,14 @@
 	<div class="d-flex">
 		<Textbox
 			class="full-row"
-			:model="textboxValue"
+			:value="value"
 			:placeholder="placeholder"
 			@focus="toggleButton"
 			@blur="toggleButton"
-			@keyUp="txtKeyUp"
+			@keyUp="keyUp"
 		/>
 		<transition :duration="1000" name="slide">
-			<div v-if="isActive" v-on:click="submit" class="btn-primary">
+			<div v-if="isActive" v-on:click="click" class="btn-primary">
 				{{ text }}
 			</div>
 		</transition>
@@ -23,24 +23,21 @@ export default {
 	data() {
 		return {
 			isActive: false,
-			textboxValue: '',
 		};
 	},
-	props: ['text', 'value', 'placeholder', 'onClick'],
+	props: ['text', 'value', 'placeholder'],
 	methods: {
 		toggleButton: function() {
 			this.isActive = !this.isActive;
 		},
-		txtKeyUp: function(e) {
-			//Enter
-			if (e.keyCode === 13) {
-				this.submit();
-			}
+		click: function($event) {
+			this.$emit('buttonClick', $event, this);
 		},
-		submit: function() {
-			if (this.textboxValue == '') return;
-			this.onClick(this.textboxValue);
-			this.textboxValue = '';
+		keyUp: function($event) {
+			this.$emit('keyUp', $event, this);
+		},
+		empty: function() {
+			this.value = '';
 		},
 	},
 	components: {

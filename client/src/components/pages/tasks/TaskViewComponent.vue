@@ -21,10 +21,11 @@
 				/>
 				<InputWithButton
 					class="unoficial-item"
-					v-bind:text="'Add'"
-					v-bind:placeholder="'+ Add'"
-					v-bind:onClick="addTask"
-					v-bind:value="addValue"
+					:text="'Add'"
+					:placeholder="'+ Add'"
+					@buttonClick="addTask"
+					@keyUp="txtKeyUp"
+					:value="addValue"
 				/>
 			</div>
 		</div>
@@ -46,11 +47,16 @@ export default {
 		};
 	},
 	methods: {
-		addTask: async function(task) {
-			let res = await TaskServices.addTask(task);
-			if (res == 'OK') this.items = await TaskServices.getAllTasks();
-			else alert(res);
-			//this.items.push({ title: task, due: '08/11/2020', priority: 'High' });
+		addTask: async function($event, component) {
+			console.log(this.addValue);
+			typeof $event;
+			typeof component;
+
+			// if (task != '') {
+			// 	let res = await TaskServices.addTask(task);
+			// 	if (res == 'OK') this.items = await TaskServices.getAllTasks();
+			// 	else alert(res);
+			// }
 		},
 		requestEdit: function(reqIdx) {
 			this.$nextTick(function() {
@@ -69,6 +75,9 @@ export default {
 			let res = await TaskServices.deleteTask(task);
 			if (res == 'OK') this.items = await TaskServices.getAllTasks();
 			else alert(res);
+		},
+		txtKeyUp: function($event, component) {
+			console.log(component);
 		},
 	},
 	components: {
