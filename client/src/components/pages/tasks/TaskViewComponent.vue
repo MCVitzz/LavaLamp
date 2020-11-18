@@ -21,6 +21,7 @@
 				/>
 				<InputWithButton
 					class="unoficial-item"
+					ref="txtAddTask"
 					:text="'Add'"
 					:placeholder="'+ Add'"
 					@buttonClick="addTask"
@@ -36,6 +37,7 @@
 import TaskServices from '../../../services/TaskServices';
 import TaskComponent from './TaskComponent';
 import InputWithButton from '../../layout/InputWithButton';
+
 export default {
 	name: 'TaskViewComponent',
 	data() {
@@ -47,16 +49,9 @@ export default {
 		};
 	},
 	methods: {
-		addTask: async function($event, component) {
-			console.log(this.addValue);
-			typeof $event;
-			typeof component;
-
-			// if (task != '') {
-			// 	let res = await TaskServices.addTask(task);
-			// 	if (res == 'OK') this.items = await TaskServices.getAllTasks();
-			// 	else alert(res);
-			// }
+		addTask: function() {
+			this.submitTask(this.$refs.txtAddTask.getValue());
+			this.$refs.txtAddTask.empty();
 		},
 		requestEdit: function(reqIdx) {
 			this.$nextTick(function() {
@@ -68,16 +63,38 @@ export default {
 		},
 		editTask: async function(task) {
 			let res = await TaskServices.updateTask(task);
-			if (res == 'OK') this.items = await TaskServices.getAllTasks();
-			else alert(res);
+			if (res == 'OK') {
+				this.items = await TaskServices.getAllTasks();
+				this.$toasted.global.success({
+					message: '😎 Task Updated!',
+				});
+			} else alert(res);
 		},
 		deleteTask: async function(task) {
 			let res = await TaskServices.deleteTask(task);
-			if (res == 'OK') this.items = await TaskServices.getAllTasks();
-			else alert(res);
+			if (res == 'OK') {
+				this.items = await TaskServices.getAllTasks();
+				this.$toasted.global.success({
+					message: '😎 Task Deleted!',
+				});
+			} else alert(res);
 		},
-		txtKeyUp: function($event, component) {
-			console.log(component);
+		txtKeyUp: function($event) {
+			if ($event.keyCode == 13) {
+				this.submitTask(this.$refs.txtAddTask.getValue());
+				this.$refs.txtAddTask.empty();
+			}
+		},
+		submitTask: async function(task) {
+			if (task != '') {
+				let res = await TaskServices.addTask(task);
+				if (res == 'OK') {
+					this.items = await TaskServices.getAllTasks();
+					this.$toasted.global.success({
+						message: '😎 Task Added!',
+					});
+				} else alert(res);
+			}
 		},
 	},
 	components: {

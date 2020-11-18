@@ -2,8 +2,7 @@
 	<input
 		ref="input"
 		type="text"
-		:v-model="value"
-		:value="value"
+		v-model="dataValue"
 		:placeholder="placeholder"
 		v-on:focus="onFocus"
 		v-on:blur="onBlur"
@@ -14,6 +13,9 @@
 export default {
 	name: 'Textbox',
 	props: ['value', 'placeholder'],
+	data() {
+		return { dataValue: this.value };
+	},
 	methods: {
 		focus: function() {
 			this.$nextTick(function() {
@@ -28,6 +30,12 @@ export default {
 		},
 		onKeyUp: function($event) {
 			this.$emit('keyUp', $event);
+		},
+		getValue: function() {
+			return this.$refs.input.value;
+		},
+		empty: function() {
+			this.$refs.input.value = '';
 		},
 	},
 };

@@ -15,6 +15,7 @@
     "node-sass": "^4.14.1",
     "sass-loader": "^10.0.4",
     "vue": "^2.6.11",
+    "vue-toasted": "^1.1.28",
     "vuejs-datepicker": "^1.6.2"
   },
   "devDependencies": {

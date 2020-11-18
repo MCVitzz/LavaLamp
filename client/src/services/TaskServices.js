@@ -11,7 +11,7 @@ class TaskServices {
         try {
             let res = await axios.get(url);
             let data = res.data;
-            if (data) {
+            if (data != 'No Tasks.') {
                 return data;
             }
         }

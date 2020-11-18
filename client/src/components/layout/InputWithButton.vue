@@ -3,6 +3,7 @@
 		<Textbox
 			class="full-row"
 			:value="value"
+			ref="txt"
 			:placeholder="placeholder"
 			@focus="toggleButton"
 			@blur="toggleButton"
@@ -31,13 +32,16 @@ export default {
 			this.isActive = !this.isActive;
 		},
 		click: function($event) {
-			this.$emit('buttonClick', $event, this);
+			this.$emit('buttonClick', $event);
 		},
 		keyUp: function($event) {
-			this.$emit('keyUp', $event, this);
+			this.$emit('keyUp', $event);
 		},
 		empty: function() {
-			this.value = '';
+			this.$refs.txt.empty();
+		},
+		getValue: function() {
+			return this.$refs.txt.getValue();
 		},
 	},
 	components: {

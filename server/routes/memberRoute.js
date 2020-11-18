@@ -30,22 +30,4 @@ router.delete('/:id', (req, res) => {
 });
 
 
-function getMembers() {
-    return ms;
-}
-
-const ms = [{
-    name: 'Vasco Pereira',
-    role: 'Full Stack Developer',
-    email: 'vascop_98@hotmail.com'
-}, {
-    name: 'João Calapez',
-    role: 'Backend Developer',
-    email: 'joao.calapez@gmail.com'
-}, {
-    name: 'Rui Patrício',
-    role: 'Goalkeeper',
-    email: 'rpatricio@wolves.com'
-},];
-
 module.exports = router;
