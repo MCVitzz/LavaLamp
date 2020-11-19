@@ -7,7 +7,7 @@
 			<router-link to="/users" class="item"
 				><FontAwesome class="icon" icon="users"
 			/></router-link>
-			<router-link to="@/Tasks" class="item"
+			<router-link to="/tasks" class="item"
 				><FontAwesome class="icon" icon="tasks"
 			/></router-link>
 			<router-link to="" class="item"
