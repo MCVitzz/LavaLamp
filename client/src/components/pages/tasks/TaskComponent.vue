@@ -16,7 +16,7 @@
 			</div>
 			<Datepicker
 				class="field"
-				@selected="confirm"
+				@selected="selectedDpDueDate"
 				ref="dpDue"
 				:value="task.dueDate"
 				:model="task.dueDate"
@@ -95,7 +95,7 @@ export default {
 		},
 		confirm: function() {
 			this.removeClick();
-			this.editTask(this.task);
+			this.$emit('edit', this.task);
 		},
 		showPriority: function() {
 			this.requestEdit(this.index);
@@ -119,6 +119,10 @@ export default {
 		},
 		deleteTask: function() {
 			this.$emit('deleteTask', this.task);
+		},
+		selectedDpDueDate: function(newDate) {
+			this.task.dueDate = newDate;
+			this.confirm();
 		},
 	},
 	directives: {

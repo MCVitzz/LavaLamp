@@ -39,15 +39,8 @@ class TaskServices {
     }
 
     //Update Task
-    static async updateTask(prop) {
+    static async updateTask(task) {
         try {
-            let task = {};
-            task._id = prop._id;
-            task.title = prop.title;
-            task.description = prop.description;
-            task.dueDate = prop.dueDate;
-            task.priority = prop.priority;
-            task.state = prop.state;
             const res = await axios.put(`${url}/update/${task._id}`, task);
             if (res.status == 200) {
                 return 'OK';
