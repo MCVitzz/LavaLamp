@@ -16,7 +16,7 @@
 					v-bind:index="index"
 					v-bind:task="item"
 					v-bind:requestEdit="requestEdit"
-					v-bind:editTask="editTask"
+					@edit="editTask"
 					@deleteTask="deleteTask"
 				/>
 				<InputWithButton
