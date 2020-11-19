@@ -1,12 +1,21 @@
 <template>
 	<div class="sidebar">
-		<!-- <div class="item first"><img src="../../assets/logo.png" /></div> -->
 		<div class="items">
-			<div class="item"><FontAwesome class="icon" icon="chart-line" /></div>
-			<div class="item"><FontAwesome class="icon" icon="users" /></div>
-			<div class="item"><FontAwesome class="icon" icon="tasks" /></div>
-			<div class="item"><FontAwesome class="icon" icon="code" /></div>
-			<div class="last item"><FontAwesome class="icon" icon="cog" /></div>
+			<router-link to="" class="item"
+				><FontAwesome class="icon" icon="chart-line"
+			/></router-link>
+			<router-link to="/users" class="item"
+				><FontAwesome class="icon" icon="users"
+			/></router-link>
+			<router-link to="@/Tasks" class="item"
+				><FontAwesome class="icon" icon="tasks"
+			/></router-link>
+			<router-link to="" class="item"
+				><FontAwesome class="icon" icon="code"
+			/></router-link>
+			<router-link to="" class="last item"
+				><FontAwesome class="icon" icon="cog"
+			/></router-link>
 		</div>
 	</div>
 </template>
