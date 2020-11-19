@@ -42,8 +42,6 @@ router.post('/add', async (req, res) => {
 //Update task
 router.put('/update/:id', async (req, res) => {
     let id = req.params.id;
-    console.log(req.body);
-    console.log(id);
     if (id) {
         try {
             console.log(req.body);
