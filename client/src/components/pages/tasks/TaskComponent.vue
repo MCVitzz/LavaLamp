@@ -74,7 +74,7 @@ export default {
 		changePriority: function(newPriority) {
 			this.hidePriority();
 			this.task.priority = newPriority;
-			this.editTask(this.task);
+			this.confirm();
 		},
 		dueClick: function() {
 			this.editClick();
