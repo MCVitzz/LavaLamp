@@ -10,8 +10,5 @@ export default {
 	components: {
 		TaskViewComponent,
 	},
-	created() {
-		console.log('Tasks');
-	},
 };
 </script>
