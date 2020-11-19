@@ -22,7 +22,12 @@ const routes = [
     path: '/tasks',
     name: 'Tasks',
     component: () => import('../views/Tasks.vue')
-  }
+  },
+  {
+    path: '/users',
+    name: 'Users',
+    component: () => import('../views/Users.vue')
+  },
 ]
 
 const router = new VueRouter({
