@@ -2,6 +2,10 @@ $background-color: #2e2e2e;
 $second-background-color: #1c1c1c;
 $text-color: #fdfdfd;
 
+@font-face {
+	font-family: 'Montserrat';
+	src: url('~@/assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
+}
 
 .d-flex {
     display: flex;
@@ -13,4 +17,16 @@ $text-color: #fdfdfd;
 	background: orangered;
 	border: 0;
 	cursor: pointer;
+}
+
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
+
+	&::selection {
+		color: black;
+		background-color: orange;
+	}
 }

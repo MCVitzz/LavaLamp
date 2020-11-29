@@ -47,7 +47,7 @@ input {
 	background: transparent;
 	padding: 2vh 1vh 2vh 2vh;
 	color: white;
-	font-size: 1.1em;
+	font-size: 1em;
 	border: 0;
 	&:placeholder {
 		color: white;

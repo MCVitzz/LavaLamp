@@ -28,6 +28,11 @@ const routes = [
     name: 'Users',
     component: () => import('../views/Users.vue')
   },
+  {
+    path: '/testingGrid',
+    name: 'TestingGrid',
+    component: () => import('../views/TestingGrid.vue')
+  }
 ]
 
 const router = new VueRouter({

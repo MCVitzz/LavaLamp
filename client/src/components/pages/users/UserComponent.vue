@@ -2,18 +2,7 @@
 	<div class="container">
 		<div class="item">
 			<IconButton @click="toggleDetail" :icon="getIcon()" />
-			<Textbox
-				class="main"
-				ref="txtFirstName"
-				:model="user.firstName"
-				:value="user.firstName"
-				v-if="edit || detail"
-				@keyUp="keyUpTxtFirstName"
-				@blur="blurTxtFirstName"
-			/>
-			<div v-else class="field main" v-on:click="firstNameClick">
-				{{ user.firstName }}
-			</div>
+			<TextboxClickToEdit :value="user.firstName" @confirm="confirmFirstName" />
 			<Textbox
 				class="main"
 				ref="txtLastName"
@@ -46,6 +35,7 @@
 import Textbox from '../../layout/Textbox';
 import IconButton from '../../layout/IconButton';
 import UserDetailComponent from './UserDetailComponent';
+import TextboxClickToEdit from '../../layout/TextboxClickToEdit';
 
 export default {
 	name: 'UserComponent',
@@ -53,6 +43,7 @@ export default {
 		Textbox,
 		IconButton,
 		UserDetailComponent,
+		TextboxClickToEdit,
 	},
 	props: ['user', 'index', 'requestEdit', 'editUser'],
 	data() {
@@ -134,6 +125,10 @@ export default {
 		},
 		deleteUser: function() {
 			this.$emit('deleteUser', this.user);
+		},
+		confirmFirstName: function(firstName) {
+			this.user.firstName = firstName;
+			this.confirm();
 		},
 	},
 	directives: {

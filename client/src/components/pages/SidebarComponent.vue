@@ -10,7 +10,7 @@
 			<router-link to="/tasks" class="item"
 				><FontAwesome class="icon" icon="tasks"
 			/></router-link>
-			<router-link to="" class="item"
+			<router-link to="/testinggrid" class="item"
 				><FontAwesome class="icon" icon="code"
 			/></router-link>
 			<router-link to="" class="last item"

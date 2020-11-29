@@ -15,24 +15,11 @@ export default {
 </script>
 <style lang="scss">
 @import './global';
-@font-face {
-	font-family: 'Montserrat';
-	src: local('Montserrat'),
-		url('./assets/fonts/Montserrat/Montserrat-Regular.ttf') format('truetype');
-}
-* {
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
-}
-*::selection {
-	color: #1c1c1c;
-	background: orange;
-}
+
 html {
 	background: $background-color;
 }
+
 #app {
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;

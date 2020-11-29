@@ -125,28 +125,6 @@ export default {
 			this.confirm();
 		},
 	},
-	directives: {
-		clickOutside: {
-			bind(el, binding) {
-				el.__ClickOutsideHandler__ = (event) => {
-					if (
-						!(
-							el === event.target ||
-							el.contains(event.target) ||
-							event.target === el.parentNode ||
-							event.target === el.nextSibling
-						)
-					) {
-						binding.value(event);
-					}
-				};
-				document.body.addEventListener('click', el.__ClickOutsideHandler__);
-			},
-			unbind(el) {
-				document.body.removeEventListener('click', el.__ClickOutsideHandler__);
-			},
-		},
-	},
 };
 </script>
 
@@ -165,6 +143,21 @@ export default {
 	&:hover {
 		background: rgba($color: transparent, $alpha: 0.1);
 		transition: ease-in-out 0.1s;
+	}
+}
+
+.item {
+	background: $background-color;
+	border-bottom: 1px solid $second-background-color;
+	p {
+		cursor: pointer;
+		padding: 1vh;
+		margin: 1vh;
+		text-align: left;
+		&:hover {
+			background: rgba($color: transparent, $alpha: 0.1);
+			transition: ease-in-out 0.1s;
+		}
 	}
 }
 
