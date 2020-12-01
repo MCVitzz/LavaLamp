@@ -14,7 +14,7 @@
 			:class="property.main ? 'main' : ''"
 		/>
 		<div class="detail">
-			<slot v-if="expanded"></slot>
+			<slot v-if="expanded" v-bind:stuff="getItem(item)"></slot>
 		</div>
 	</div>
 </template>
@@ -39,10 +39,14 @@ export default {
 		},
 		expand: function() {
 			this.expanded = !this.expanded;
-			console.log(this.expanded);
 		},
 		getIcon: function() {
 			return this.expanded ? 'chevron-down' : 'chevron-right';
+		},
+		getItem: function(item) {
+			// console.log(item);
+			// console.log(this.item);
+			return item;
 		},
 	},
 };

@@ -10,11 +10,13 @@
 			<GridRow
 				:grid="grid"
 				:properties="properties"
-				v-for="(item, idx) in data"
+				v-for="(item, idx) in content"
 				:key="idx"
 				:item="item"
-				><slot></slot
-			></GridRow>
+				@changed="changed(val, item, property)"
+			>
+				<slot></slot>
+			</GridRow>
 		</div>
 	</div>
 </template>
@@ -23,7 +25,7 @@ import GridRow from './GridRow';
 
 export default {
 	name: 'Grid',
-	props: ['properties', 'data', 'gridDisplay'],
+	props: ['properties', 'content', 'gridDisplay'],
 	components: {
 		GridRow,
 	},
@@ -46,7 +48,7 @@ export default {
 			this.$emit('changed', item);
 		},
 	},
-	created() {
+	async created() {
 		if (this.gridDisplay) this.grid.gridTemplateColumns = this.gridDisplay;
 		else
 			this.grid.gridTemplateColumns =
