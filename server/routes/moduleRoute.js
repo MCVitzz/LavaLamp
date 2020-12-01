@@ -29,7 +29,6 @@ router.get('/getById/:id', async (req, res) => {
 //Add module
 router.post('/add', async (req, res) => {
     try {
-        console.log(req.body);
         let module = new ModuleSchema(req.body);
         await module.save();
         res.send('Module added successfully.');
