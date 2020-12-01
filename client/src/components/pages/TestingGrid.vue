@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import Grid from '@/components/layout/Grid';
+import Grid from '@/components/layout/Grid/Grid';
 
 export default {
 	name: 'TestingGrid',

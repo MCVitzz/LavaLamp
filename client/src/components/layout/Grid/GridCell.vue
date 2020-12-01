@@ -20,9 +20,9 @@
 	</div>
 </template>
 <script>
-import TextboxClickToEdit from './TextboxClickToEdit';
-import IconButton from './IconButton';
-import Combobox from './Combobox';
+import TextboxClickToEdit from '../TextboxClickToEdit';
+import IconButton from '../IconButton';
+import Combobox from '../Combobox';
 
 export default {
 	name: 'GridCell',
@@ -43,7 +43,6 @@ export default {
 
 .cell {
 	background: $background-color;
-	border-bottom: 1px solid $second-background-color;
 	p {
 		cursor: pointer;
 		padding: 1vh;

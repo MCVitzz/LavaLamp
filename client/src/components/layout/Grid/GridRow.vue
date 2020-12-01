@@ -49,7 +49,12 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+@import '@/global.scss';
+
 .detail {
 	grid-column: 1 / -1;
+}
+.row {
+	border-bottom: 1px solid $second-background-color;
 }
 </style>
