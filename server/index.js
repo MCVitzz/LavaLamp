@@ -36,6 +36,7 @@ app.use(cors());
 app.use('/api/members', require('./routes/memberRoute'));
 app.use('/api/tasks', require('./routes/taskRoute'));
 app.use('/api/users', require('./routes/userRoute'));
+app.use('/api/modules', require('./routes/moduleRoute'));
 
 // Production Environment
 app.use(serveStatic(__dirname + '/public'));

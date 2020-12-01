@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const taskSchema = new mongoose.Schema({
     title: {
@@ -18,7 +19,11 @@ const taskSchema = new mongoose.Schema({
     state: {
         type: String,
         required: true,
-    }
+    },
+    module:{
+        type: Schema.Types.ObjectId
+    },
+
 });
 
 module.exports = mongoose.model('tasks', taskSchema);

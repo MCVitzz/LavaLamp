@@ -86,5 +86,23 @@ router.delete('/delete/:id', async (req, res) => {
     }
 });
 
+router.get('/getByModule/:id', async (req, res) => {
+    let moduleId = req.params.id;
+    if (moduleId) {
+        try {
+            let tasks = await TaskSchema.find({module:moduleId});
+            if (tasks.length == 0) res.send('No Tasks on Module.');
+            res.json(tasks).send();
+        }
+        catch (err) {
+            res.status(400).send(err);
+        }
+    }
+    else{
+        res.status(400).send('Module is missing ID.');
+    }
+
+});
+
 //Export module
 module.exports = router;
