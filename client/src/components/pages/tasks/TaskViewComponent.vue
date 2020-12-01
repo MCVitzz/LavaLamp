@@ -1,79 +1,70 @@
 <template>
-	<div class="frame">
-		<div class="tasks-container">
-			<div class="headers">
-				<div class="header"></div>
-				<div class="header">Title</div>
-				<div class="header">Due</div>
-				<div class="header">Priority</div>
-			</div>
-			<div class="items">
-				<TaskComponent
-					ref="tasks"
-					v-for="(item, index) in items"
-					v-bind:item="item"
-					v-bind:key="item._id"
-					v-bind:index="index"
-					v-bind:task="item"
-					v-bind:requestEdit="requestEdit"
-					@edit="editTask"
-					@deleteTask="deleteTask"
-				/>
-				<InputWithButton
-					class="unoficial-item"
-					ref="txtAddTask"
-					:text="'Add'"
-					:placeholder="'+ Add'"
-					@buttonClick="addTask"
-					@keyUp="txtKeyUp"
-					:value="addValue"
-				/>
-			</div>
-		</div>
+	<div class="container">
+		<Grid :properties="properties" :content="content" @changed="changed">
+			<template v-slot="{ item }">
+				<div class="detail-container">
+					<IconTextButton
+						icon="trash-alt"
+						text="Delete"
+						@click="deleteClick(item)"
+					/>
+				</div>
+			</template>
+		</Grid>
+		<InputWithButton
+			ref="txtAddTask"
+			class="input"
+			:text="'Add'"
+			:placeholder="'+ Add'"
+			:value="addValue"
+			@buttonClick="addTask"
+			@keyUp="txtKeyUp"
+		/>
 	</div>
 </template>
 
 <script>
+import Grid from '../../layout/Grid/Grid';
 import TaskServices from '../../../services/TaskServices';
-import TaskComponent from './TaskComponent';
+import IconTextButton from '../../layout/IconTextButton';
 import InputWithButton from '../../layout/InputWithButton';
 
 export default {
-	name: 'TaskViewComponent',
+	name: 'TasksViewComponent',
+	components: { Grid, IconTextButton, InputWithButton },
 	data() {
 		return {
 			addValue: '',
-			items: [],
-			error: '',
-			text: '',
+			content: [],
+			properties: [
+				{ name: 'title', control: 'textbox', main: true },
+				{ name: 'dueDate', control: 'datepicker' },
+				{
+					name: 'priority',
+					control: 'combobox',
+					options: ['High', 'Medium', 'Low'],
+				},
+			],
 		};
 	},
 	methods: {
-		addTask: function() {
-			this.submitTask(this.$refs.txtAddTask.getValue());
-			this.$refs.txtAddTask.empty();
+		getData: async function() {
+			let data = await TaskServices.getAllTasks();
+			return data;
 		},
-		requestEdit: function(reqIdx) {
-			this.$nextTick(function() {
-				let tasks = this.$refs.tasks;
-				for (let idx in tasks) {
-					if (reqIdx != idx) tasks[idx].removeClick();
-				}
-			});
-		},
-		editTask: async function(task) {
+		changed: async function(task) {
 			let res = await TaskServices.updateTask(task);
 			if (res == 'OK') {
-				this.items = await TaskServices.getAllTasks();
+				this.content = await TaskServices.getAllTasks();
 				this.$toasted.global.success({
 					message: '😎 Task Updated!',
 				});
 			} else alert(res);
 		},
-		deleteTask: async function(task) {
+		deleteClick: async function(task) {
 			let res = await TaskServices.deleteTask(task);
 			if (res == 'OK') {
-				this.items = await TaskServices.getAllTasks();
+				this.content = await TaskServices.getAllTasks();
 				this.$toasted.global.success({
 					message: '😎 Task Deleted!',
 				});
@@ -85,11 +76,16 @@ export default {
 				this.$refs.txtAddTask.empty();
 			}
 		},
+		addTask: function() {
+			let txtAddTask = this.$refs.txtAddTask;
+			this.submitTask(txtAddTask.getValue());
+			txtAddTask.empty();
+		},
 		submitTask: async function(task) {
 			if (task != '') {
 				let res = await TaskServices.addTask(task);
 				if (res == 'OK') {
-					this.items = await TaskServices.getAllTasks();
+					this.content = await TaskServices.getAllTasks();
 					this.$toasted.global.success({
 						message: '😎 Task Added!',
 					});
@@ -97,97 +93,35 @@ export default {
 			}
 		},
 	},
-	components: {
-		TaskComponent,
-		InputWithButton,
-	},
 	async created() {
-		try {
-			this.items = await TaskServices.getAllTasks();
-		} catch (err) {
-			this.error = err.message;
-		}
+		this.content = await this.getData();
 	},
 };
 </script>
 
 <style lang="scss" scoped>
-@import '../../../global';
+@import '@/global';
 
-.frame {
-	margin: auto;
+.container {
+	max-height: 100%;
 	width: 100%;
-	height: 100%;
 	padding: 4vh;
 }
 
-#addTask {
-	margin: 0;
-	left: 0;
-	padding: 1vh;
-	border-radius: 0.75vh;
-	border: 1px solid orangered;
-	background: transparent;
-	color: orangered;
-	transition: ease-in 0.1s;
-	&:hover {
-		background: orangered;
-		color: $background-color;
-	}
-
-	&:active {
-		transform: scale(0.95);
-	}
-}
-
-.icon {
-	margin-right: 1vh;
-}
-
-.tasks-container {
-	color: white;
-	display: grid;
-	grid-template-columns: 1fr 6fr 6fr 6fr;
-	grid-template-rows: max-content;
-}
-
-.headers,
-/deep/ .item {
-	display: grid;
-	grid-template-columns: 1fr 6fr 6fr 6fr;
-}
-
-.headers {
-	max-height: 10%;
-}
-
-.headers,
-.items {
-	grid-column: 1 / 5;
-}
-
-.header {
-	color: grey;
-	font-size: 1.2em;
-}
-
-.header {
-	padding: 1vh;
-	margin: 1vh;
+.detail-container {
+	background: $second-background-color;
 	text-align: left;
+	padding: 2vh;
+	margin: 0vh 1vh 0.5vh;
 }
 
-.unoficial-item {
-	border-bottom: 1px solid $second-background-color;
+.input-container {
+	padding: 0 4vh;
 }
 
-/deep/ .main {
-	font-weight: bold;
-	font-size: 1.1em;
-}
-
-/deep/ .full-row {
+.input {
 	width: 100%;
-	grid-column: 1 / 4;
+	padding: 0 4vh;
+	border-bottom: 1px solid $second-background-color;
 }
 </style>

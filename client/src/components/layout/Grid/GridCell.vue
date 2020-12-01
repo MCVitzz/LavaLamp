@@ -17,17 +17,26 @@
 			:icon="icon"
 			@click="click"
 		/>
+		<Datepicker
+			v-else-if="property.control == 'datepicker'"
+			class="datepicker"
+			@selected="changed"
+			ref="dp"
+			:value="value"
+			:model="value"
+		/>
 	</div>
 </template>
 <script>
 import TextboxClickToEdit from '../TextboxClickToEdit';
+import Datepicker from '../Datepicker';
 import IconButton from '../IconButton';
 import Combobox from '../Combobox';
 
 export default {
 	name: 'GridCell',
 	props: ['property', 'value', 'icon'],
-	components: { TextboxClickToEdit, Combobox, IconButton },
+	components: { TextboxClickToEdit, Combobox, IconButton, Datepicker },
 	methods: {
 		changed: function(val) {
 			this.$emit('changed', val);
@@ -52,6 +61,17 @@ export default {
 			background: rgba($color: transparent, $alpha: 0.1);
 			transition: ease-in-out 0.1s;
 		}
+	}
+}
+
+.datepicker {
+	cursor: pointer;
+	padding: 1vh;
+	margin: 1vh;
+	text-align: left;
+	&:hover {
+		background: rgba($color: transparent, $alpha: 0.1);
+		transition: ease-in-out 0.1s;
 	}
 }
 </style>

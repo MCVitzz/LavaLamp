@@ -135,17 +135,6 @@ export default {
 	border-bottom: 1px solid $second-background-color;
 }
 
-.field {
-	cursor: pointer;
-	padding: 1vh;
-	margin: 1vh;
-	text-align: left;
-	&:hover {
-		background: rgba($color: transparent, $alpha: 0.1);
-		transition: ease-in-out 0.1s;
-	}
-}
-
 .item {
 	background: $background-color;
 	border-bottom: 1px solid $second-background-color;
