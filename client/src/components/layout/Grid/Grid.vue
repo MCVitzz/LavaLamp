@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="grid-container">
 		<div :style="grid" class="headers">
 			<p class="header"></p>
 			<p class="header" v-for="(property, index) in properties" :key="index">
@@ -13,9 +13,11 @@
 				v-for="(item, idx) in content"
 				:key="idx"
 				:item="item"
-				@changed="changed(val, item, property)"
+				@changed="changed"
 			>
-				<slot></slot>
+				<template v-slot="{ item }">
+					<slot :item="item"></slot>
+				</template>
 			</GridRow>
 		</div>
 	</div>
@@ -83,10 +85,8 @@ export default {
 	font-weight: bold;
 }
 
-.container {
+.grid-container {
 	margin: auto;
 	width: 100%;
-	height: 100%;
-	padding: 4vh;
 }
 </style>

@@ -14,7 +14,7 @@
 			:class="property.main ? 'main' : ''"
 		/>
 		<div class="detail">
-			<slot v-if="expanded" v-bind:stuff="getItem(item)"></slot>
+			<slot v-if="expanded" :item="item"></slot>
 		</div>
 	</div>
 </template>
@@ -35,7 +35,7 @@ export default {
 	},
 	methods: {
 		changed: function($event, item, property) {
-			this.$emit('changed', item, property);
+			this.$emit('changed', $event, item, property);
 		},
 		expand: function() {
 			this.expanded = !this.expanded;

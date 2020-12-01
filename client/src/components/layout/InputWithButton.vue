@@ -52,6 +52,10 @@ export default {
 <style lang="scss" scoped>
 @import '../../global';
 
+.full-row {
+	width: 100%;
+}
+
 .slide-enter-active {
 	transition: all 0.3s ease;
 }
