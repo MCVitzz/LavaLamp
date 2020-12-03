@@ -23,7 +23,7 @@ class UserServices {
     //Add User
     static async addUser(user) {
         try {
-            const res = await axios.post(`${url}/add`, { 'email': user });
+            const res = await axios.post(`${url}`, { 'email': user });
             if (res.status == 200) {
                 return 'OK';
             }
@@ -39,7 +39,7 @@ class UserServices {
     //Update User
     static async updateUser(user) {
         try {
-            const res = await axios.put(`${url}/update/${user._id}`, user);
+            const res = await axios.put(`${url}/${user._id}`, user);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -55,7 +55,7 @@ class UserServices {
     //Delete User
     static async deleteUser(user) {
         try {
-            const res = await axios.delete(`${url}/delete/${user._id}`);
+            const res = await axios.delete(`${url}/${user._id}`);
             if (res.status == 200) {
                 return 'OK';
             }

@@ -27,7 +27,7 @@ router.get('/getById/:id', async (req, res) => {
 });
 
 //Add task
-router.post('/add', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         if (!req.body.state) req.body.state = 'Unassigned';
         let task = new TaskSchema(req.body);
@@ -40,7 +40,7 @@ router.post('/add', async (req, res) => {
 });
 
 //Update task
-router.put('/update/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
@@ -64,7 +64,7 @@ router.put('/update/:id', async (req, res) => {
 });
 
 //Delete task
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
@@ -90,15 +90,15 @@ router.get('/getByModule/:id', async (req, res) => {
     let moduleId = req.params.id;
     if (moduleId) {
         try {
-            let tasks = await TaskSchema.find({module:moduleId});
-            if (tasks.length == 0) res.send('No Tasks on Module.');
-            res.json(tasks).send();
+            let tasks = await TaskSchema.find({ module: moduleId });
+            if (tasks.length == 0) res.send('No Tasks.');
+            else res.send(tasks);
         }
         catch (err) {
             res.status(400).send(err);
         }
     }
-    else{
+    else {
         res.status(400).send('Module is missing ID.');
     }
 

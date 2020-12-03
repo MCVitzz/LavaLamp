@@ -1,6 +1,7 @@
 <template>
 	<div :style="grid" class="row">
 		<GridCell
+			color="white"
 			:property="{ control: 'iconbutton' }"
 			:icon="getIcon()"
 			@clicked="expand"

@@ -10,7 +10,7 @@
 				{{ option }}
 			</p>
 		</div>
-		<p>{{ val }}</p>
+		<p class="selected-item">{{ val && val != '' ? val : '&nbsp;' }}</p>
 	</div>
 </template>
 
@@ -36,6 +36,9 @@ export default {
 			this.collapse();
 			this.$emit('changed', value);
 		},
+	},
+	created() {
+		console.log(this.val);
 	},
 };
 </script>
@@ -79,5 +82,9 @@ export default {
 		background: rgba(0, 0, 0, 0.5);
 		color: $text-color;
 	}
+}
+
+.selected-item {
+	font-size: 1.1em;
 }
 </style>

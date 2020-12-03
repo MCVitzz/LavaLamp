@@ -1,12 +1,12 @@
 <template>
-	<button v-on:click="click">
-		<FontAwesome class="icon" :icon="icon" />
+	<button :style="`color: ${color}`" v-on:click="click">
+		<FontAwesome :icon="icon" />
 	</button>
 </template>
 <script>
 export default {
 	name: 'IconButton',
-	props: ['icon'],
+	props: ['icon', 'color'],
 	methods: {
 		click: function($event) {
 			this.$emit('click', $event);
@@ -40,9 +40,5 @@ button {
 	&:hover {
 		background: rgba($color: transparent, $alpha: 0.1);
 	}
-}
-
-.icon {
-	color: $text-color;
 }
 </style>

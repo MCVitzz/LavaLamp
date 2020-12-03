@@ -27,7 +27,7 @@ router.get('/getById/:id', async (req, res) => {
 });
 
 //Add user
-router.post('/add', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         console.log(req.body);
         let user = new UserSchema(req.body);
@@ -40,7 +40,7 @@ router.post('/add', async (req, res) => {
 });
 
 //Update user
-router.put('/update/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
@@ -64,7 +64,7 @@ router.put('/update/:id', async (req, res) => {
 });
 
 //Delete user
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {

@@ -27,7 +27,7 @@ router.get('/getById/:id', async (req, res) => {
 });
 
 //Add module
-router.post('/add', async (req, res) => {
+router.post('/', async (req, res) => {
     try {
         let module = new ModuleSchema(req.body);
         await module.save();
@@ -39,7 +39,7 @@ router.post('/add', async (req, res) => {
 });
 
 //Update module
-router.put('/update/:id', async (req, res) => {
+router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
@@ -62,7 +62,7 @@ router.put('/update/:id', async (req, res) => {
 });
 
 //Delete module
-router.delete('/delete/:id', async (req, res) => {
+router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {

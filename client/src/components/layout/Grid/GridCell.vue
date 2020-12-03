@@ -1,5 +1,5 @@
 <template>
-	<div class="cell">
+	<div class="cell" :style="`color: ${color};`">
 		<p v-if="!property || !property.control">{{ value }}</p>
 		<TextboxClickToEdit
 			v-else-if="property.control == 'textbox'"
@@ -16,6 +16,7 @@
 			v-else-if="property.control == 'iconbutton'"
 			:icon="icon"
 			@click="click"
+			:color="color"
 		/>
 		<Datepicker
 			v-else-if="property.control == 'datepicker'"
@@ -35,7 +36,7 @@ import Combobox from '../Combobox';
 
 export default {
 	name: 'GridCell',
-	props: ['property', 'value', 'icon'],
+	props: ['property', 'value', 'icon', 'color'],
 	components: { TextboxClickToEdit, Combobox, IconButton, Datepicker },
 	methods: {
 		changed: function(val) {

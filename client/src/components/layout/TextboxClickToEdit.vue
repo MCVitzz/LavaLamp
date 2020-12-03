@@ -31,6 +31,9 @@ export default {
 				this.confirm(e.target.value);
 			}
 		},
+		focus: function() {
+			this.click();
+		},
 		blur: function(e) {
 			this.edit = false;
 			this.confirm(e.target.value);

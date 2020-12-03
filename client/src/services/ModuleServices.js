@@ -4,7 +4,7 @@ const url = '/api/modules';
 
 /* eslint-disable no-async-promise-executor */
 class ModuleServices {
-    //Get all users
+    //Get all modules
     static async getAllModules() {
 
         try {
@@ -20,10 +20,10 @@ class ModuleServices {
         }
     }
 
-    //Add User
-    static async addModule(user) {
+    //Add Module
+    static async addModule(module) {
         try {
-            const res = await axios.post(`${url}/add`, { 'email': user });
+            const res = await axios.post(url, { 'title': module, collapsed: true });
             if (res.status == 200) {
                 return 'OK';
             }
@@ -36,10 +36,10 @@ class ModuleServices {
         }
     }
 
-    //Update User
-    static async updateUser(user) {
+    //Update Module
+    static async updateModule(module) {
         try {
-            const res = await axios.put(`${url}/update/${user._id}`, user);
+            const res = await axios.put(`${url}/${module._id}`, module);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -52,10 +52,10 @@ class ModuleServices {
         }
     }
 
-    //Delete User
-    static async deleteUser(user) {
+    //Delete Module
+    static async deleteModule(module) {
         try {
-            const res = await axios.delete(`${url}/delete/${user._id}`);
+            const res = await axios.delete(`${url}/${module._id}`);
             if (res.status == 200) {
                 return 'OK';
             }

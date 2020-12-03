@@ -15,7 +15,7 @@
 			ref="txtAddUser"
 			class="input"
 			:text="'Add'"
-			:placeholder="'+ Add'"
+			:placeholder="'+ Email'"
 			:value="addValue"
 			@buttonClick="addUser"
 			@keyUp="txtKeyUp"

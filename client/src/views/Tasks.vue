@@ -1,14 +1,14 @@
 <template>
-	<TaskViewComponent />
+	<ModuleViewComponent />
 </template>
 
 <script>
 // @ is an alias to /src
-import TaskViewComponent from '@/components/pages/tasks/TaskViewComponent';
+import ModuleViewComponent from '@/components/pages/tasks/ModuleViewComponent';
 
 export default {
 	components: {
-		TaskViewComponent,
+		ModuleViewComponent,
 	},
 };
 </script>

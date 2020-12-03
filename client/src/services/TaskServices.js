@@ -22,10 +22,25 @@ class TaskServices {
         }
     }
 
+    //Get Tasks by Module
+    static async getTasksByModule(module) {
+        try {
+            let res = await axios.get(`${url}/getByModule/${module}`);
+            let data = res.data;
+            if (data != 'No Tasks.') {
+                return data;
+            }
+        }
+        catch (err) {
+            console.log(err);
+            return [];
+        }
+    }
+
     //Add Task
     static async addTask(task) {
         try {
-            const res = await axios.post(`${url}/add`, { 'title': task });
+            const res = await axios.post(`${url}`, task);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -41,7 +56,7 @@ class TaskServices {
     //Update Task
     static async updateTask(task) {
         try {
-            const res = await axios.put(`${url}/update/${task._id}`, task);
+            const res = await axios.put(`${url}/${task._id}`, task);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -57,7 +72,7 @@ class TaskServices {
     //Delete Task
     static async deleteTask(task) {
         try {
-            const res = await axios.delete(`${url}/delete/${task._id}`);
+            const res = await axios.delete(`${url}/${task._id}`);
             if (res.status == 200) {
                 return 'OK';
             }
