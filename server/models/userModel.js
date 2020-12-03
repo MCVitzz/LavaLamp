@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+const Schema = mongoose.Schema;
 
 const userSchema = new mongoose.Schema({
     firstName: {
@@ -8,6 +9,9 @@ const userSchema = new mongoose.Schema({
     lastName: {
         type: String,
         max: 255
+    },
+    team: {
+        type: Schema.Types.ObjectId
     },
     email: {
         type: String,

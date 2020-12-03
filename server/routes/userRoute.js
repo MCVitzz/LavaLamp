@@ -86,5 +86,23 @@ router.delete('/:id', async (req, res) => {
     }
 });
 
+router.get('/getByTeam/:id', async (req, res) => {
+    let teamId = req.params.id;
+    if (teamId) {
+        try {
+            let teams = await UserSchema.find({ team: teamId });
+            if (teams.length == 0) res.send('No Teams.');
+            else res.send(teams);
+        }
+        catch (err) {
+            res.status(400).send(err);
+        }
+    }
+    else {
+        res.status(400).send('Team is missing ID.');
+    }
+
+});
+
 //Export module
 module.exports = router;
