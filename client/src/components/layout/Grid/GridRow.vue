@@ -10,24 +10,31 @@
 			v-for="(property, index) in properties"
 			:key="index"
 			@changed="changed($event, item, property.name)"
-			:value="item[property.name]"
+			:value="getValue(item, property)"
 			:property="property"
 			:class="property.main ? 'main' : ''"
 		/>
-		<div class="detail">
-			<slot v-if="expanded" :item="item"></slot>
+		<div v-if="expanded" class="detail w-100">
+			<div v-if="chosen == 'side-menu'">
+				<SideMenu @close="expand"> <slot :item="item"></slot></SideMenu>
+			</div>
+			<div v-else>
+				<slot :item="item"></slot>
+			</div>
 		</div>
 	</div>
 </template>
 
 <script>
 import GridCell from './GridCell';
+import SideMenu from '../SideMenu';
 
 export default {
 	name: 'GridRow',
-	props: ['properties', 'item', 'grid'],
+	props: ['properties', 'item', 'grid', 'chosen'],
 	components: {
 		GridCell,
+		SideMenu,
 	},
 	data() {
 		return {
@@ -45,9 +52,19 @@ export default {
 			return this.expanded ? 'chevron-down' : 'chevron-right';
 		},
 		getItem: function(item) {
-			// console.log(item);
-			// console.log(this.item);
 			return item;
+		},
+		getValue: function(item, property) {
+			if (property.name.indexOf('.') == -1) return item[property.name];
+			else {
+				let propertyCascade = property.name.split('.');
+				let value = item;
+				for (item of propertyCascade) {
+					if (value[item] == undefined) return '';
+					value = value[item];
+				}
+				return value;
+			}
 		},
 	},
 };

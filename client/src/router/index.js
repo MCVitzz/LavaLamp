@@ -24,9 +24,9 @@ const routes = [
     component: () => import('../views/Tasks.vue')
   },
   {
-    path: '/users',
-    name: 'Users',
-    component: () => import('../views/Users.vue')
+    path: '/teams',
+    name: 'teams',
+    component: () => import('../views/Teams.vue')
   },
   {
     path: '/testingGrid',

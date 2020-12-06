@@ -20,10 +20,39 @@ class UserServices {
         }
     }
 
+    //Get User by Id
+    static async getById(id) {
+        try {
+            let res = await axios.get(`${url}/getById/${id}`);
+            let data = res.data;
+            if (data != 'No Users.') {
+                return data;
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+        return {};
+    }
+
+    static async getByTeam(id) {
+        try {
+            let res = await axios.get(`${url}/getByTeam/${id}`);
+            let data = res.data;
+            if (data != 'No Users.') {
+                return data;
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+        return [];
+    }
+
     //Add User
     static async addUser(user) {
         try {
-            const res = await axios.post(`${url}`, { 'email': user });
+            const res = await axios.post(`${url}`, user);
             if (res.status == 200) {
                 return 'OK';
             }

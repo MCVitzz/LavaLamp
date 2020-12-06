@@ -16,7 +16,6 @@
 			class="input"
 			:text="'Add'"
 			:placeholder="'+ Add'"
-			:value="addValue"
 			@buttonClick="addTask"
 			@keyUp="txtKeyUp"
 		/>
@@ -35,7 +34,6 @@ export default {
 	props: ['module'],
 	data() {
 		return {
-			addValue: '',
 			content: [],
 			properties: [
 				{ name: 'title', control: 'textbox', main: true },

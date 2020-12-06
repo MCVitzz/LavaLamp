@@ -37,9 +37,6 @@ export default {
 			this.$emit('changed', value);
 		},
 	},
-	created() {
-		console.log(this.val);
-	},
 };
 </script>
 

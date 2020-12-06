@@ -32,6 +32,7 @@ import InputWithButton from '../../layout/InputWithButton';
 export default {
 	name: 'UsersViewComponent',
 	components: { Grid, IconTextButton, InputWithButton },
+	props: ['team'],
 	data() {
 		return {
 			addValue: '',
@@ -45,13 +46,13 @@ export default {
 	},
 	methods: {
 		getData: async function() {
-			let data = await UserServices.getAllUsers();
+			let data = await UserServices.getByTeam(this.team);
 			return data;
 		},
 		changed: async function(user) {
 			let res = await UserServices.updateUser(user);
 			if (res == 'OK') {
-				this.content = await UserServices.getAllUsers();
+				this.content = await this.getData();
 				this.$toasted.global.success({
 					message: '😎 User Updated!',
 				});
@@ -60,7 +61,7 @@ export default {
 		deleteClick: async function(user) {
 			let res = await UserServices.deleteUser(user);
 			if (res == 'OK') {
-				this.content = await UserServices.getAllUsers();
+				this.content = await this.getData();
 				this.$toasted.global.success({
 					message: '😎 User Deleted!',
 				});
@@ -74,14 +75,14 @@ export default {
 		},
 		addUser: function() {
 			let txtAddUser = this.$refs.txtAddUser;
-			this.submitUser(txtAddUser.getValue());
+			this.submitUser({ email: txtAddUser.getValue(), team: this.team });
 			txtAddUser.empty();
 		},
 		submitUser: async function(user) {
 			if (user != '') {
 				let res = await UserServices.addUser(user);
 				if (res == 'OK') {
-					this.content = await UserServices.getAllUsers();
+					this.content = await this.getData();
 					this.$toasted.global.success({
 						message: '😎 User Added!',
 					});
@@ -101,7 +102,6 @@ export default {
 .container {
 	max-height: 100%;
 	width: 100%;
-	padding: 4vh;
 }
 
 .detail-container {

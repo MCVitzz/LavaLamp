@@ -13,6 +13,7 @@
 				v-for="(item, idx) in content"
 				:key="idx"
 				:item="item"
+				:chosen="chosen"
 				@changed="changed"
 			>
 				<template v-slot="{ item }">
@@ -27,7 +28,7 @@ import GridRow from './GridRow';
 
 export default {
 	name: 'Grid',
-	props: ['properties', 'content', 'gridDisplay'],
+	props: ['properties', 'content', 'gridDisplay', 'chosen'],
 	components: {
 		GridRow,
 	},
@@ -41,6 +42,7 @@ export default {
 	},
 	methods: {
 		toRegular: function(text) {
+			text = text.split('.')[0];
 			let result = text.replace(/([A-Z])/g, ' $1');
 			let finalResult = result.charAt(0).toUpperCase() + result.slice(1);
 			return finalResult;

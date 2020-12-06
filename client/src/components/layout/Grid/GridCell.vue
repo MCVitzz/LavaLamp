@@ -1,6 +1,8 @@
 <template>
 	<div class="cell" :style="`color: ${color};`">
-		<p v-if="!property || !property.control">{{ value }}</p>
+		<p v-if="!property || !property.control">
+			{{ value && value != '' ? value : '&nbsp;' }}
+		</p>
 		<TextboxClickToEdit
 			v-else-if="property.control == 'textbox'"
 			:value="value"
@@ -26,6 +28,9 @@
 			:value="value"
 			:model="value"
 		/>
+		<div v-else-if="property.control == 'custom'">
+			<slot @changed="changed" :value="value"></slot>
+		</div>
 	</div>
 </template>
 <script>
@@ -57,6 +62,7 @@ export default {
 		cursor: pointer;
 		padding: 1vh;
 		margin: 1vh;
+		font-size: 1.1em;
 		text-align: left;
 		&:hover {
 			background: rgba($color: transparent, $alpha: 0.1);

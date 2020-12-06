@@ -4,7 +4,7 @@
 			<router-link to="" class="item"
 				><FontAwesome class="icon" icon="chart-line"
 			/></router-link>
-			<router-link to="/users" class="item"
+			<router-link to="/teams" class="item"
 				><FontAwesome class="icon" icon="users"
 			/></router-link>
 			<router-link to="/tasks" class="item"
