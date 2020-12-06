@@ -17,15 +17,12 @@ router.post('/', (req, res) => {
         email: req.body.email
     });
     res.status(201).send();
-    console.log(req.body);
 });
 
 //Delete Members
 router.delete('/:id', (req, res) => {
     const members = getMembers();
     members.pop();
-    console.log(req.params.id)
-    console.log(members);
     res.status(200).send();
 });
 

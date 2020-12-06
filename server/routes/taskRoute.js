@@ -15,7 +15,7 @@ router.get('/getById/:id', async (req, res) => {
     if (id) {
         try {
             let task = await TaskSchema.findById(id);
-            res.send({ task });
+            res.send(task);
         }
         catch (err) {
             res.status(400).send(err);
@@ -44,7 +44,6 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            console.log(req.body);
             let updatedTask = await TaskSchema.findOneAndUpdate({ _id: id }, req.body);
             if (updatedTask) {
                 res.send('Task updated successfully.');

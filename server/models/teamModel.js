@@ -4,11 +4,11 @@ const Schema = mongoose.Schema;
 const teamSchema = new mongoose.Schema({
     name: {
         type: String,
+        required: true,
         max: 255
     },
     description: {
         type: String,
-        required: true,
     },
     leader: {
         type: Schema.Types.ObjectId,

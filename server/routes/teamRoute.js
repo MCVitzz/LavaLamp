@@ -44,7 +44,6 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            console.log(req.body);
             let updatedTeam = await TeamSchema.findOneAndUpdate({ _id: id }, req.body);
             if (updatedTeam) {
                 res.send('Team updated successfully.');

@@ -10,6 +10,9 @@ const taskSchema = new mongoose.Schema({
     description: {
         type: String,
     },
+    owner: {
+        type: Schema.Types.ObjectId
+    },
     dueDate: {
         type: Date,
     },
@@ -20,7 +23,7 @@ const taskSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    module:{
+    module: {
         type: Schema.Types.ObjectId
     },
 

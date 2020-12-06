@@ -15,7 +15,7 @@ router.get('/getById/:id', async (req, res) => {
     if (id) {
         try {
             let user = await UserSchema.findById(id);
-            res.send({ user });
+            res.send(user);
         }
         catch (err) {
             res.status(400).send(err);
@@ -26,10 +26,26 @@ router.get('/getById/:id', async (req, res) => {
     }
 });
 
+router.get('/getByTeam/:id', async (req, res) => {
+    let id = req.params.id;
+    if (id) {
+        try {
+            let users = await UserSchema.find({ team: id });
+            if (users.length == 0) res.send('No Users.');
+            else res.send(users);
+        }
+        catch (err) {
+            res.status(400).send(err);
+        }
+    }
+    else {
+        res.status.send('Team is missing ID.');
+    }
+});
+
 //Add user
 router.post('/', async (req, res) => {
     try {
-        console.log(req.body);
         let user = new UserSchema(req.body);
         await user.save();
         res.send('User added successfully.');
@@ -44,7 +60,6 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            console.log(req.body);
             let updatedUser = await UserSchema.findOneAndUpdate({ _id: id }, req.body);
             if (updatedUser) {
                 res.send('User updated successfully.');
