@@ -1,15 +1,13 @@
 <template>
-	<Grid :properties="properties" :data="data" @changed="changed">
-		<div style="text-align: center;">Cucu</div>
-	</Grid>
+	<SelectUserComponent />
 </template>
 
 <script>
-import Grid from '@/components/layout/Grid/Grid';
+import SelectUserComponent from './users/SelectUserComponent';
 
 export default {
 	name: 'TestingGrid',
-	components: { Grid },
+	components: { SelectUserComponent },
 	methods: {
 		changed: function(changed) {
 			this.$toasted.global.success({

@@ -7,6 +7,7 @@
 		v-on:focus="onFocus"
 		v-on:blur="onBlur"
 		v-on:keyup="onKeyUp"
+		@change="change"
 	/>
 </template>
 <script>
@@ -36,6 +37,9 @@ export default {
 		},
 		empty: function() {
 			this.$refs.input.value = '';
+		},
+		change: function($event) {
+			this.$emit('changed', $event);
 		},
 	},
 };

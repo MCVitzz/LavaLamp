@@ -16,6 +16,13 @@
 				:chosen="chosen"
 				@changed="changed"
 			>
+				<template v-slot:custom="{ changedFunction, value }"
+					><slot
+						:value="value"
+						:changedFunction="changedFunction"
+						name="custom"
+					></slot
+				></template>
 				<template v-slot="{ item }">
 					<slot :item="item"></slot>
 				</template>

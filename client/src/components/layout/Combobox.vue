@@ -1,11 +1,11 @@
 <template>
-	<div v-on:click="expand" class="field dialog-container">
+	<div @click="expand" class="field dialog-container">
 		<div class="dialog" v-if="expanded" v-click-outside="collapse">
 			<p
 				v-for="(option, index) in options"
 				:key="index"
 				class="dialog-item"
-				v-on:click="changed(option)"
+				@click="changed(option)"
 			>
 				{{ option }}
 			</p>

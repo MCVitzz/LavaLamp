@@ -29,7 +29,7 @@
 			:model="value"
 		/>
 		<div v-else-if="property.control == 'custom'">
-			<slot @changed="changed" :value="value"></slot>
+			<slot :changedFunction="changed" :value="value"></slot>
 		</div>
 	</div>
 </template>
@@ -45,12 +45,14 @@ export default {
 	components: { TextboxClickToEdit, Combobox, IconButton, Datepicker },
 	methods: {
 		changed: function(val) {
+			console.log('here');
 			this.$emit('changed', val);
 		},
 		click: function($event) {
 			this.$emit('clicked', $event);
 		},
 	},
+	created() {},
 };
 </script>
 <style lang="scss" scoped>

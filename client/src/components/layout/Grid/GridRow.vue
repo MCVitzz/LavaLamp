@@ -13,7 +13,15 @@
 			:value="getValue(item, property)"
 			:property="property"
 			:class="property.main ? 'main' : ''"
-		/>
+		>
+			<template v-slot="{ changedFunction, value }">
+				<slot
+					name="custom"
+					:value="value"
+					:changedFunction="changedFunction"
+				></slot>
+			</template>
+		</GridCell>
 		<div v-if="expanded" class="detail w-100">
 			<div v-if="chosen == 'side-menu'">
 				<SideMenu @close="expand"> <slot :item="item"></slot></SideMenu>
@@ -42,8 +50,8 @@ export default {
 		};
 	},
 	methods: {
-		changed: function($event, item, property) {
-			this.$emit('changed', $event, item, property);
+		changed: function(val, item, property) {
+			this.$emit('changed', val, item, property);
 		},
 		expand: function() {
 			this.expanded = !this.expanded;
@@ -67,6 +75,7 @@ export default {
 			}
 		},
 	},
+	created() {},
 };
 </script>
 

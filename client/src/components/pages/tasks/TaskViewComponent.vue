@@ -1,7 +1,10 @@
 <template>
 	<div class="tasks-container">
 		<Grid :properties="properties" :content="content" @changed="changed">
-			<template v-slot="{ item }">
+			<template v-slot:custom="{ changedFunction, value }"
+				><SelectUserComponent :changed="changedFunction" :value="value"
+			/></template>
+			<template name="detail" v-slot="{ item }">
 				<div class="detail-container">
 					<IconTextButton
 						icon="trash-alt"
@@ -26,17 +29,19 @@
 import Grid from '../../layout/Grid/Grid';
 import TaskServices from '../../../services/TaskServices';
 import IconTextButton from '../../layout/IconTextButton';
+import SelectUserComponent from '../users/SelectUserComponent';
 import InputWithButton from '../../layout/InputWithButton';
 
 export default {
 	name: 'TasksViewComponent',
-	components: { Grid, IconTextButton, InputWithButton },
+	components: { Grid, IconTextButton, InputWithButton, SelectUserComponent },
 	props: ['module'],
 	data() {
 		return {
 			content: [],
 			properties: [
 				{ name: 'title', control: 'textbox', main: true },
+				{ name: 'owner', control: 'custom' },
 				{ name: 'dueDate', control: 'datepicker' },
 				{
 					name: 'priority',
