@@ -1,11 +1,7 @@
 const Database = require('./database');
 const Module = function (module) {
     this.title = module.title;
-    this.module = module.module;
-    this.state = module.state;
-    this.dueDate = module.dueDate;
-    this.priority = module.priority;
-    this.owner = module.owner;
+    this.collapsed = module.collapsed;
 };
 
 Module.create = async (module) => {
@@ -46,7 +42,12 @@ Module.getAll = async () => {
 
 Module.update = async (id, module) => {
     try {
-        let res = await Database.query('UPDATE Modules SET ' + Object.keys(module).join('" = ? ,"') + ' = ? WHERE id = ?', [Object.values(module), id]);
+        let keys = Object.keys(module);
+        let vals = Object.values(module);
+        let indexId = keys.indexOf('id');
+        keys.splice(indexId, 1);
+        vals.splice(indexId, 1);
+        let res = await Database.query('UPDATE Modules SET ' + keys.join(' = ? ,') + ' = ? WHERE id = ?', [...vals, id]);
         if (res.affectedRows == 0)
             return 'No Modules updated';
         else
@@ -57,7 +58,6 @@ Module.update = async (id, module) => {
         return err.message;
     }
 };
-
 Module.delete = async (id) => {
     try {
         let res = await Database.query('DELETE FROM Modules WHERE id = ?', id);

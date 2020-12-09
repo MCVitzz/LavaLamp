@@ -30,7 +30,6 @@ router.get('/:id', async (req, res) => {
 //Add module
 router.post('/', async (req, res) => {
     try {
-        if (!req.body.state) req.body.state = 'Unassigned';
         let module = await Modules.create(req.body);
         res.send(`Module created with Id ${module.id}.`);
     }

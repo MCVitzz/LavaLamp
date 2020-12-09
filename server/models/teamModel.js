@@ -46,7 +46,12 @@ Team.getAll = async () => {
 
 Team.update = async (id, team) => {
     try {
-        let res = await Database.query('UPDATE Teams SET ' + Object.keys(team).join('" = ? ,"') + ' = ? WHERE id = ?', [Object.values(team), id]);
+        let keys = Object.keys(team);
+        let vals = Object.values(team);
+        let indexId = keys.indexOf('id');
+        keys.splice(indexId, 1);
+        vals.splice(indexId, 1);
+        let res = await Database.query('UPDATE Teams SET ' + keys.join(' = ? ,') + ' = ? WHERE id = ?', [...vals, id]);
         if (res.affectedRows == 0)
             return 'No Teams updated';
         else

@@ -23,7 +23,7 @@ class UserServices {
     //Get User by Id
     static async getById(id) {
         try {
-            let res = await axios.get(`${url}/getById/${id}`);
+            let res = await axios.get(`${url}/${id}`);
             let data = res.data;
             if (data != 'No Users.') {
                 return data;

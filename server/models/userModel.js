@@ -61,7 +61,12 @@ User.getByTeam = async (user) => {
 
 User.update = async (id, user) => {
     try {
-        let res = await Database.query('UPDATE Users SET ' + Object.keys(user).join('" = ? ,"') + ' = ? WHERE id = ?', [Object.values(user), id]);
+        let keys = Object.keys(user);
+        let vals = Object.values(user);
+        let indexId = keys.indexOf('id');
+        keys.splice(indexId, 1);
+        vals.splice(indexId, 1);
+        let res = await Database.query('UPDATE Users SET ' + keys.join(' = ? ,') + ' = ? WHERE id = ?', [...vals, id]);
         if (res.affectedRows == 0)
             return 'No Users updated';
         else

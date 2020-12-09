@@ -30,7 +30,6 @@ router.get('/:id', async (req, res) => {
 //Add team
 router.post('/', async (req, res) => {
     try {
-        if (!req.body.state) req.body.state = 'Unassigned';
         let team = await Users.create(req.body);
         res.send(`User created with Id ${team.id}.`);
     }
@@ -67,11 +66,15 @@ router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let deletedUser = await Users.delete(id);
-            res.send(deletedUser);
+            let deletedTeam = await Users.delete(id);
+            if (deletedTeam == 'Team deleted.')
+                res.send(deletedTeam);
+            else {
+                res.status(400).send(deletedTeam);
+            }
         }
         catch (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
     }
     else {

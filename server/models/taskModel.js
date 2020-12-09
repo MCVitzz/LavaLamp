@@ -61,7 +61,12 @@ Task.getAll = async () => {
 
 Task.update = async (id, task) => {
     try {
-        let res = await Database.query('UPDATE Tasks SET ' + Object.keys(task).join('" = ? ,"') + ' = ? WHERE id = ?', [Object.values(task), id]);
+        let keys = Object.keys(task);
+        let vals = Object.values(task);
+        let indexId = keys.indexOf('id');
+        keys.splice(indexId, 1);
+        vals.splice(indexId, 1);
+        let res = await Database.query('UPDATE Tasks SET ' + keys.join(' = ? ,') + ' = ? WHERE id = ?', [...vals, id]);
         if (res.affectedRows == 0)
             return 'No Tasks updated';
         else

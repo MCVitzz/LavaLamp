@@ -6,8 +6,11 @@
 			:content="content"
 			@changed="changed"
 		>
+			<template v-slot:custom="{ changedFunction, value }"
+				><SelectUserComponent :changed="changedFunction" :value="value"
+			/></template>
 			<template v-slot="{ item }">
-				<TeamDetailComponent :team="item" />
+				<TeamDetailComponent :team="item" @deleted="refresh" />
 			</template>
 		</Grid>
 		<InputWithButton
@@ -25,18 +28,23 @@
 import Grid from '../../layout/Grid/Grid';
 import InputWithButton from '../../layout/InputWithButton';
 import TeamServices from '../../../services/TeamServices';
-import UserServices from '../../../services/UserServices';
 import TeamDetailComponent from './TeamDetailComponent';
+import SelectUserComponent from '../users/SelectUserComponent';
 
 export default {
 	name: 'TeamsViewComponent',
-	components: { Grid, InputWithButton, TeamDetailComponent },
+	components: {
+		Grid,
+		InputWithButton,
+		TeamDetailComponent,
+		SelectUserComponent,
+	},
 	data() {
 		return {
 			content: [],
 			properties: [
 				{ name: 'name', control: 'textbox', main: true },
-				{ name: 'leader.firstName' },
+				{ name: 'leader', control: 'custom' },
 			],
 		};
 	},
@@ -55,11 +63,6 @@ export default {
 		},
 		getData: async function() {
 			let data = await TeamServices.getAllTeams();
-			console.log(data);
-			for (let team of data) {
-				if (team.leader != undefined)
-					team.leader = await UserServices.getById(team.leader);
-			}
 			return data;
 		},
 		txtKeyUp: function($event) {

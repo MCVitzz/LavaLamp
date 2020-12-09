@@ -62,6 +62,7 @@ export default {
 	background-color: $second-background-color;
 	padding: 1vh;
 	width: 50%;
+	min-width: fit-content;
 	//outline: 1px solid $background-color;
 	top: 50px;
 	left: -1vh;
