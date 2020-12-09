@@ -55,6 +55,7 @@ export default {
 		},
 		getData: async function() {
 			let data = await TeamServices.getAllTeams();
+			console.log(data);
 			for (let team of data) {
 				if (team.leader != undefined)
 					team.leader = await UserServices.getById(team.leader);
