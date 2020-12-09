@@ -1,10 +1,9 @@
 const express = require('express');
-const path = require('path');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const Database = require('./models/database');
 
 const app = express();
 
@@ -12,21 +11,13 @@ const app = express();
 const port = process.env.PORT || 5000;
 dotenv.config();
 
-//Config mongoose
-mongoose.set('useFindAndModify', false);
-
-//Connect to database
-mongoose.connect(
-    process.env.DB_CONNECT, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}, (err) => {
-    if (err) {
-        console.error(err);
-        console.error('Could not connect to database, check log above');
-    }
-    else
-        console.log('Connected to Database');
+//Connect to Database
+Database.setConnection({
+    host: process.env.URL,
+    port: process.env.PORT,
+    database: process.env.DB,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
 });
 
 //Middleware

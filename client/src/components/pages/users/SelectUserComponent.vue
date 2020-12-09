@@ -51,7 +51,7 @@ export default {
 			this.val = `${user.firstName} ${user.lastName}`;
 			this.collapse();
 			console.log(this.changed);
-			this.changed(user._id);
+			this.changed(user.id);
 		},
 		search: function($event) {
 			let value = $event.target.value;
@@ -66,7 +66,7 @@ export default {
 		},
 		adjustValue: function() {
 			if (this.value) {
-				let user = this.fullContent.find((el) => el._id == this.value);
+				let user = this.fullContent.find((el) => el.id == this.value);
 				this.val = `${user.firstName} ${user.lastName}`;
 			}
 		},

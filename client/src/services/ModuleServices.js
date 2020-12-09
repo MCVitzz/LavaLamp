@@ -39,7 +39,7 @@ class ModuleServices {
     //Update Module
     static async updateModule(module) {
         try {
-            const res = await axios.put(`${url}/${module._id}`, module);
+            const res = await axios.put(`${url}/${module.id}`, module);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -55,7 +55,7 @@ class ModuleServices {
     //Delete Module
     static async deleteModule(module) {
         try {
-            const res = await axios.delete(`${url}/${module._id}`);
+            const res = await axios.delete(`${url}/${module.id}`);
             if (res.status == 200) {
                 return 'OK';
             }

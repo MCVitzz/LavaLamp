@@ -1,21 +1,22 @@
 const express = require('express');
-const TaskSchema = require('../models/taskModel');
+const Tasks = require('../services/taskServices');
 const router = express.Router();
 
 //Get all tasks
 router.get('/', async (req, res) => {
-    let tasks = await TaskSchema.find();
+    let tasks = await Tasks.getAll();
     if (!tasks || tasks.length == 0) res.send('No Tasks.');
     else res.send(tasks);
 });
 
 //Get task by id
-router.get('/getById/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let task = await TaskSchema.findById(id);
-            res.send(task);
+            let task = await Tasks.getById(id);
+            if (!task.id) res.send('No Task found.');
+            else res.send(task);
         }
         catch (err) {
             res.status(400).send(err);
@@ -30,9 +31,8 @@ router.get('/getById/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         if (!req.body.state) req.body.state = 'Unassigned';
-        let task = new TaskSchema(req.body);
-        await task.save();
-        res.send('Task added successfully.');
+        let task = await Tasks.create(req.body);
+        res.send(`Task created with Id ${task.id}.`);
     }
     catch (err) {
         res.status(400).send(err);
@@ -44,9 +44,9 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let updatedTask = await TaskSchema.findOneAndUpdate({ _id: id }, req.body);
+            let updatedTask = await Tasks.update(id, req.body);
             if (updatedTask) {
-                res.send('Task updated successfully.');
+                res.send(updatedTask);
             }
             else {
                 res.status(400).send({ error: 'Could not update the task.' });
@@ -67,14 +67,8 @@ router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let deletedTask = await TaskSchema.deleteOne({ _id: id });
-
-            if (deletedTask.deletedCount) {
-                res.send('Task deleted successfully.');
-            }
-            else {
-                res.status(400).send({ error: 'Could not delete the task.' });
-            }
+            let deletedTask = await Tasks.delete(id);
+            res.send(deletedTask);
         }
         catch (err) {
             res.send(err);
@@ -89,8 +83,8 @@ router.get('/getByModule/:id', async (req, res) => {
     let moduleId = req.params.id;
     if (moduleId) {
         try {
-            let tasks = await TaskSchema.find({ module: moduleId });
-            if (tasks.length == 0) res.send('No Tasks.');
+            let tasks = await Tasks.getByModule(moduleId);
+            if (!tasks[0].id) res.send('No Tasks.');
             else res.send(tasks);
         }
         catch (err) {

@@ -1,21 +1,22 @@
 const express = require('express');
-const ModuleSchema = require('../models/moduleModel');
+const Modules = require('../services/moduleServices');
 const router = express.Router();
 
-//Get all tasks
+//Get all modules
 router.get('/', async (req, res) => {
-    let modules = await ModuleSchema.find();
+    let modules = await Modules.getAll();
     if (!modules || modules.length == 0) res.send('No Modules.');
     else res.send(modules);
 });
 
 //Get module by id
-router.get('/getById/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let module = await ModuleSchema.findById(id);
-            res.send({ module });
+            let module = await Modules.getById(id);
+            if (!module.id) res.send('No Module found.');
+            else res.send(module);
         }
         catch (err) {
             res.status(400).send(err);
@@ -29,9 +30,9 @@ router.get('/getById/:id', async (req, res) => {
 //Add module
 router.post('/', async (req, res) => {
     try {
-        let module = new ModuleSchema(req.body);
-        await module.save();
-        res.send('Module added successfully.');
+        if (!req.body.state) req.body.state = 'Unassigned';
+        let module = await Modules.create(req.body);
+        res.send(`Module created with Id ${module.id}.`);
     }
     catch (err) {
         res.status(400).send(err);
@@ -43,9 +44,9 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let updatedModule = await ModuleSchema.findOneAndUpdate({ _id: id }, req.body);
+            let updatedModule = await Modules.update(id, req.body);
             if (updatedModule) {
-                res.send('Module updated successfully.');
+                res.send(updatedModule);
             }
             else {
                 res.status(400).send({ error: 'Could not update the module.' });
@@ -66,14 +67,8 @@ router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let deletedModule = await ModuleSchema.deleteOne({ _id: id });
-
-            if (deletedModule.deletedCount) {
-                res.send('Module deleted successfully.');
-            }
-            else {
-                res.status(400).send({ error: 'Could not delete the module.' });
-            }
+            let deletedModule = await Modules.delete(id);
+            res.send(deletedModule);
         }
         catch (err) {
             res.send(err);
@@ -83,7 +78,6 @@ router.delete('/:id', async (req, res) => {
         res.status(400).send({ error: 'Module is missing ID.' });
     }
 });
-
 
 //Export module
 module.exports = router;

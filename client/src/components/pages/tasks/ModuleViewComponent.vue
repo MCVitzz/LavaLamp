@@ -22,7 +22,7 @@
 					/>
 				</template>
 				<template v-slot:details
-					><TaskViewComponent class="tasks-container" :module="item._id"
+					><TaskViewComponent class="tasks-container" :module="item.id"
 				/></template>
 			</Collapsible>
 		</div>

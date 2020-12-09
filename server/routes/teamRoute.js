@@ -1,28 +1,29 @@
 const express = require('express');
-const TeamSchema = require('../models/teamModel');
+const Users = require('../services/teamServices');
 const router = express.Router();
 
 //Get all teams
 router.get('/', async (req, res) => {
-    let teams = await TeamSchema.find();
-    if (!teams || teams.length == 0) res.send('No Teams.');
+    let teams = await Users.getAll();
+    if (!teams || teams.length == 0) res.send('No Users.');
     else res.send(teams);
 });
 
 //Get team by id
-router.get('/getById/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let team = await TeamSchema.findById(id);
-            res.send({ team });
+            let team = await Users.getById(id);
+            if (!team.id) res.send('No User found.');
+            else res.send(team);
         }
         catch (err) {
             res.status(400).send(err);
         }
     }
     else {
-        res.status(400).send('Team is missing ID.');
+        res.status(400).send('User is missing ID.');
     }
 });
 
@@ -30,9 +31,8 @@ router.get('/getById/:id', async (req, res) => {
 router.post('/', async (req, res) => {
     try {
         if (!req.body.state) req.body.state = 'Unassigned';
-        let team = new TeamSchema(req.body);
-        await team.save();
-        res.send('Team added successfully.');
+        let team = await Users.create(req.body);
+        res.send(`User created with Id ${team.id}.`);
     }
     catch (err) {
         res.status(400).send(err);
@@ -44,9 +44,9 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let updatedTeam = await TeamSchema.findOneAndUpdate({ _id: id }, req.body);
-            if (updatedTeam) {
-                res.send('Team updated successfully.');
+            let updatedUser = await Users.update(id, req.body);
+            if (updatedUser) {
+                res.send(updatedUser);
             }
             else {
                 res.status(400).send({ error: 'Could not update the team.' });
@@ -58,7 +58,7 @@ router.put('/:id', async (req, res) => {
         }
     }
     else {
-        res.status(400).send({ error: 'Team is missing ID.' });
+        res.status(400).send({ error: 'User is missing ID.' });
     }
 });
 
@@ -67,21 +67,15 @@ router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let deletedTeam = await TeamSchema.deleteOne({ _id: id });
-
-            if (deletedTeam.deletedCount) {
-                res.send('Team deleted successfully.');
-            }
-            else {
-                res.status(400).send({ error: 'Could not delete the team.' });
-            }
+            let deletedUser = await Users.delete(id);
+            res.send(deletedUser);
         }
         catch (err) {
             res.send(err);
         }
     }
     else {
-        res.status(400).send({ error: 'Team is missing ID.' });
+        res.status(400).send({ error: 'User is missing ID.' });
     }
 });
 

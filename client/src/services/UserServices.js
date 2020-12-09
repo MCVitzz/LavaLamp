@@ -68,7 +68,7 @@ class UserServices {
     //Update User
     static async updateUser(user) {
         try {
-            const res = await axios.put(`${url}/${user._id}`, user);
+            const res = await axios.put(`${url}/${user.id}`, user);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -84,7 +84,7 @@ class UserServices {
     //Delete User
     static async deleteUser(user) {
         try {
-            const res = await axios.delete(`${url}/${user._id}`);
+            const res = await axios.delete(`${url}/${user.id}`);
             if (res.status == 200) {
                 return 'OK';
             }

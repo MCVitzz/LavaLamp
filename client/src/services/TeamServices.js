@@ -39,7 +39,7 @@ class TeamServices {
     //Update Team
     static async updateTeam(team) {
         try {
-            const res = await axios.put(`${url}/${team._id}`, team);
+            const res = await axios.put(`${url}/${team.id}`, team);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -55,7 +55,7 @@ class TeamServices {
     //Delete Team
     static async deleteTeam(team) {
         try {
-            const res = await axios.delete(`${url}/${team._id}`);
+            const res = await axios.delete(`${url}/${team.id}`);
             if (res.status == 200) {
                 return 'OK';
             }

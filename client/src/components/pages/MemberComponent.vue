@@ -13,7 +13,7 @@
 				v-for="(member, index) in members"
 				v-bind:item="member"
 				v-bind:index="index"
-				v-bind:key="member._id"
+				v-bind:key="member.id"
 				v-bind:member="member"
 			></MemberCardComponent>
 		</div>

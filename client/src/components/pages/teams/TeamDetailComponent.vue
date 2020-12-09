@@ -1,6 +1,6 @@
 <template>
 	<div class="detail-container">
-		<UsersViewComponent class="users-view" :team="team._id" />
+		<UsersViewComponent class="users-view" :team="team.id" />
 		<IconTextButton icon="trash-alt" text="Delete" />
 	</div>
 </template>
