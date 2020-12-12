@@ -1,6 +1,6 @@
 <template>
 	<div class="gantt-chart">
-		<GanttChart v-if="showGantt" :tasks="ganttData" />
+		<GanttChart v-if="showGantt" :data="ganttData" />
 	</div>
 </template>
 
@@ -13,7 +13,7 @@ export default {
 	components: { GanttChart },
 	data() {
 		return {
-			ganttData: { data: [], links: [] },
+			ganttData: [],
 			showGantt: false, //Lazy loading prevents starting gantt with no values
 		};
 	},
@@ -21,34 +21,12 @@ export default {
 		getGanttData: async function() {
 			return await TaskServices.getAllTasks();
 		},
-		parseGanttData: function(data) {
-			let tasks = [];
-			for (let item of data) {
-				let startDate = new Date();
-				let endDate = new Date(item.dueDate);
-				startDate.setDate(endDate.getDate() - 7);
-
-				tasks.push({
-					id: item.id,
-					text: item.title,
-					start_date: formatDate(startDate),
-					duration: 7,
-					progress: 1,
-				});
-			}
-			console.table(tasks);
-			return tasks;
-		},
 	},
 	async created() {
-		this.ganttData.data = this.parseGanttData(await this.getGanttData());
+		this.ganttData = await this.getGanttData();
 		this.showGantt = true;
 	},
 };
-
-function formatDate(date) {
-	return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`;
-}
 </script>
 
 <style lang="scss" scoped>
