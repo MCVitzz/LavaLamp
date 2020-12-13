@@ -1,19 +1,20 @@
 <template>
 	<div class="tasks-container">
-		<Grid :properties="properties" :content="content" @changed="changed">
-			<template v-slot:custom="{ changedFunction, value }"
-				><SelectUserComponent :changed="changedFunction" :value="value"
-			/></template>
-			<template name="detail" v-slot="{ item }">
-				<div class="detail-container">
-					<IconTextButton
-						icon="trash-alt"
-						text="Delete"
-						@click="deleteClick(item)"
+		<div class="task-list">
+			<Grid :properties="properties" :content="content" @changed="changed">
+				<template v-slot:custom="{ changedFunction, value }"
+					><SelectUserComponent :changed="changedFunction" :value="value"
+				/></template>
+				<template name="detail" v-slot="{ item }">
+					<TaskDetailComponent
+						:stateButton="newStateButton"
+						:task="item"
+						@deleted="deleteClick"
+						@stateChange="changeState"
 					/>
-				</div>
-			</template>
-		</Grid>
+				</template>
+			</Grid>
+		</div>
 		<InputWithButton
 			ref="txtAddTask"
 			class="input"
@@ -28,13 +29,18 @@
 <script>
 import Grid from '../../layout/Grid/Grid';
 import TaskServices from '../../../services/TaskServices';
-import IconTextButton from '../../layout/IconTextButton';
 import SelectUserComponent from '../users/SelectUserComponent';
+import TaskDetailComponent from './TaskDetailComponent';
 import InputWithButton from '../../layout/InputWithButton';
 
 export default {
 	name: 'TasksViewComponent',
-	components: { Grid, IconTextButton, InputWithButton, SelectUserComponent },
+	components: {
+		Grid,
+		InputWithButton,
+		SelectUserComponent,
+		TaskDetailComponent,
+	},
 	props: ['module'],
 	data() {
 		return {
@@ -48,6 +54,7 @@ export default {
 					control: 'combobox',
 					options: ['High', 'Medium', 'Low'],
 				},
+				{ name: 'state' },
 			],
 		};
 	},
@@ -57,6 +64,10 @@ export default {
 			return data;
 		},
 		changed: async function(task) {
+			if (task.owner != undefined && task.state == 'Unassigned') {
+				task.state = 'To Do';
+			}
+			if (task.dueDate != undefined) task.dueDate = newDate(task.dueDate);
 			let res = await TaskServices.updateTask(task);
 			if (res == 'OK') {
 				this.content = await this.getData();
@@ -99,11 +110,43 @@ export default {
 				} else alert(res);
 			}
 		},
+		changeState: function(task, newState) {
+			if (task.state == 'To Do' && newState == 'Doing') {
+				task.state = 'Doing';
+			} else if (task.state == 'Doing' && newState == 'Review') {
+				task.state = 'Review';
+			} else if (task.state == 'Review' && newState == 'Fail') {
+				task.state = 'To Do';
+			} else if (task.state == 'Review' && newState == 'Approve') {
+				task.state = 'Complete';
+			}
+			this.changed(task);
+		},
+		newStateButton: function(task) {
+			if (task.state == 'To Do') {
+				return ['Doing'];
+			} else if (task.state == 'Doing') {
+				return ['Review'];
+			} else if (task.state == 'Review') {
+				return ['Approve', 'Fail'];
+			} else if (task.state == 'Review') {
+				return ['Complete'];
+			}
+		},
 	},
 	async created() {
 		this.content = await this.getData();
 	},
 };
+
+function newDate(date) {
+	date = new Date(date);
+	let day = date.getDate();
+	let month = date.getMonth() + 1; //Months are zero based
+	let year = date.getFullYear();
+	let dateStr = `${year}-${month}-${day}`;
+	return dateStr;
+}
 </script>
 
 <style lang="scss" scoped>

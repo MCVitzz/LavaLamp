@@ -34,4 +34,21 @@ $text-color: #fdfdfd;
 		color: black;
 		background-color: orange;
 	}
+	/* width */
+	&::-webkit-scrollbar {
+		width: 10px;
+	}
+
+	/* Track */
+	&::-webkit-scrollbar-track {
+		background: $second-background-color;
+	}
+
+	/* Handle */
+	&::-webkit-scrollbar-thumb {
+		background: gray;
+		&:hover {
+			background: darkgray;
+		}
+	}
 }
