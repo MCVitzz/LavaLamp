@@ -14,7 +14,7 @@ dotenv.config();
 //Connect to Database
 Database.setConnection({
     host: process.env.URL,
-    port: process.env.PORT,
+    port: process.env.DB_PORT,
     database: process.env.DB,
     user: process.env.USER,
     password: process.env.PASSWORD,
