@@ -1,14 +1,14 @@
 <template>
-	<TestingGrid />
+	<Testing />
 </template>
 
 <script>
 // @ is an alias to /src
-import TestingGrid from '@/components/pages/TestingGrid';
+import Testing from '@/components/pages/Testing';
 
 export default {
 	components: {
-		TestingGrid,
+		Testing,
 	},
 };
 </script>
