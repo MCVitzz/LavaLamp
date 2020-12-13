@@ -2,7 +2,7 @@
 	<input
 		ref="input"
 		type="text"
-		v-model="dataValue"
+		:value="value"
 		:placeholder="placeholder"
 		v-on:focus="onFocus"
 		v-on:blur="onBlur"
@@ -14,9 +14,6 @@
 export default {
 	name: 'Textbox',
 	props: ['value', 'placeholder'],
-	data() {
-		return { dataValue: this.value };
-	},
 	methods: {
 		focus: function() {
 			this.$nextTick(function() {

@@ -8,6 +8,7 @@ export default {
 	props: ['value'],
 	methods: {
 		clicked: function() {
+			console.log('oi');
 			this.$emit('clicked');
 		},
 	},

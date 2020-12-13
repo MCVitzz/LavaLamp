@@ -76,6 +76,8 @@ export default {
 .dialog-item {
 	margin: 0.75vh;
 	padding: 1vh;
+	width: 100%;
+	overflow: hidden;
 	&:hover {
 		background: rgba(0, 0, 0, 0.5);
 		color: $text-color;

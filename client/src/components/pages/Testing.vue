@@ -1,16 +1,20 @@
 <template>
 	<div>
-		<Map />
+		<AddressFinder @changed="changed" />
 	</div>
 </template>
 
 <script>
-import Map from '../layout/Map';
-import 'leaflet/dist/leaflet.css';
+import AddressFinder from '../layout/AddressFinder';
 
 export default {
 	name: 'Testing',
-	components: { Map },
+	components: { AddressFinder },
+	methods: {
+		changed: function(val) {
+			console.log(val);
+		},
+	},
 };
 </script>
 
@@ -19,8 +23,6 @@ export default {
 
 div {
 	color: white;
-	margin: auto;
-	font-size: 2em;
 	width: 100%;
 	height: 100%;
 	padding: 4vh;

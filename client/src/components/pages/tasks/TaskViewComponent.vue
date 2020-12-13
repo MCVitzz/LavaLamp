@@ -9,6 +9,7 @@
 					<TaskDetailComponent
 						:stateButton="newStateButton"
 						:task="item"
+						@changed="changed"
 						@deleted="deleteClick"
 						@stateChange="changeState"
 					/>

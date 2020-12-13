@@ -1,5 +1,10 @@
 <template>
 	<div class="detail-container">
+		<AddressFinder
+			class="address-finder"
+			@changed="changeAddress"
+			:address="task.address"
+		/>
 		<IconTextButton
 			class="button"
 			icon="trash-alt"
@@ -17,12 +22,13 @@
 </template>
 
 <script>
+import AddressFinder from '../../layout/AddressFinder';
 import IconTextButton from '../../layout/IconTextButton';
 import Button from '../../layout/Button';
 
 export default {
 	name: 'TaskDetailComponent',
-	components: { IconTextButton, Button },
+	components: { AddressFinder, IconTextButton, Button },
 	props: ['task', 'stateButton'],
 	methods: {
 		deleteTask: function() {
@@ -34,6 +40,10 @@ export default {
 		stateChange: function(newState) {
 			this.$emit('stateChange', this.task, newState);
 		},
+		changeAddress: function(address) {
+			this.task.address = address;
+			this.$emit('changed', this.task);
+		},
 	},
 };
 </script>
@@ -41,5 +51,10 @@ export default {
 <style lang="scss" scoped>
 .button {
 	margin-left: 2vh;
+}
+
+.address-finder {
+	width: 50vh;
+	height: 80vh;
 }
 </style>

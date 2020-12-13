@@ -3,25 +3,25 @@
 		<LMap
 			ref="map"
 			@update:center="centerUpdate"
-			@update:zoom="zoomUpdate"
-			:zoom="zoom"
+			:zoom.sync="zoom"
 			:center="center"
 			:options="mapOptions"
 		>
 			<LTileLayer :url="url" :attribution="attribution" />
+			<LMarker :lat-lng="center"> </LMarker>
 		</LMap>
 	</div>
 </template>
 
 <script>
-import { latLng } from 'leaflet';
-import { LMap, LTileLayer } from 'vue2-leaflet';
+import { latLng, Icon } from 'leaflet';
+import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import 'leaflet/dist/leaflet.css';
 
 export default {
 	name: 'Map',
-	components: { LMap, LTileLayer },
+	components: { LMap, LTileLayer, LMarker },
 	data() {
 		return {
 			zoom: 13,
@@ -36,20 +36,27 @@ export default {
 		};
 	},
 	methods: {
-		zoomUpdate(zoom) {
-			this.currentZoom = zoom;
-		},
-		centerUpdate(center) {
+		centerUpdate: function(center) {
 			this.currentCenter = center;
+		},
+		searchAddress: async function(address) {
+			return await this.provider.search({
+				query: address,
+			});
+		},
+		setCenter: function(x, y) {
+			this.center = latLng(y, x);
+			this.zoom = 18;
 		},
 	},
 	async created() {
-		this.provider = new OpenStreetMapProvider();
-		let results = await this.provider.search({
-			query: 'Rua Aquilino Ribeiro Carnaxide',
+		delete Icon.Default.prototype._getIconUrl;
+		Icon.Default.mergeOptions({
+			iconRetinaUrl: require('leaflet/dist/images/marker-icon-2x.png'),
+			iconUrl: require('leaflet/dist/images/marker-icon.png'),
+			shadowUrl: require('leaflet/dist/images/marker-shadow.png'),
 		});
-		console.log(results);
-		this.center = latLng(results[0].y, results[0].x);
+		this.provider = new OpenStreetMapProvider();
 		this.zoom = 18;
 	},
 };
