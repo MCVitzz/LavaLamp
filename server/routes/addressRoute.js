@@ -1,54 +1,54 @@
 const express = require('express');
-const Teams = require('../services/teamServices');
+const Addresses = require('../services/addressServices');
 const router = express.Router();
 
-//Get all teams
+//Get all addresses
 router.get('/', async (req, res) => {
-    let teams = await Teams.getAll();
-    if (!teams || teams.length == 0) res.send('No Teams.');
-    else res.send(teams);
+    let addresses = await Addresses.getAll();
+    if (!addresses || addresses.length == 0) res.send('No Addresses.');
+    else res.send(addresses);
 });
 
-//Get team by id
+//Get address by id
 router.get('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let team = await Teams.getById(id);
-            if (!team.id) res.send('No Team found.');
-            else res.send(team);
+            let address = await Addresses.getById(id);
+            if (!address.id) res.send('No Address found.');
+            else res.send(address);
         }
         catch (err) {
             res.status(400).send(err);
         }
     }
     else {
-        res.status(400).send('Team is missing ID.');
+        res.status(400).send('Address is missing ID.');
     }
 });
 
-//Add team
+//Add address
 router.post('/', async (req, res) => {
     try {
-        let team = await Teams.create(req.body);
-        res.send(`Team created with Id ${team.id}.`);
+        let address = await Addresses.create(req.body);
+        res.send(address);
     }
     catch (err) {
-        res.status(400).send(err);
+        res.status(400).send(err.message);
     }
 });
 
-//Update team
+//Update address
 router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let updatedTeam = await Teams.update(id, req.body);
-            if (updatedTeam) {
-                res.send(updatedTeam);
+            let updatedAddress = await Addresses.update(id, req.body);
+            if (updatedAddress) {
+                res.send(updatedAddress);
             }
             else {
-                res.status(400).send({ error: 'Could not update the team.' });
+                res.status(400).send({ error: 'Could not update the address.' });
             }
         }
         catch (err) {
@@ -57,16 +57,16 @@ router.put('/:id', async (req, res) => {
         }
     }
     else {
-        res.status(400).send({ error: 'Team is missing ID.' });
+        res.status(400).send({ error: 'Address is missing ID.' });
     }
 });
 
-//Delete team
+//Delete address
 router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let deletedTeam = await Teams.delete(id);
+            let deletedTeam = await Addresses.delete(id);
             if (deletedTeam == 'Team deleted.')
                 res.send(deletedTeam);
             else {
@@ -78,7 +78,7 @@ router.delete('/:id', async (req, res) => {
         }
     }
     else {
-        res.status(400).send({ error: 'Team is missing ID.' });
+        res.status(400).send({ error: 'Address is missing ID.' });
     }
 });
 

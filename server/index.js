@@ -29,6 +29,7 @@ app.use('/api/tasks', require('./routes/taskRoute'));
 app.use('/api/users', require('./routes/userRoute'));
 app.use('/api/modules', require('./routes/moduleRoute'));
 app.use('/api/teams', require('./routes/teamRoute'));
+app.use('/api/addresses', require('./routes/addressRoute'));
 app.use('/api/teamUsers', require('./routes/teamUserRoute'));
 
 // Production Environment
