@@ -59,7 +59,11 @@ export default {
 		 */
 		const config = {
 			licenseKey:
+<<<<<<< Updated upstream
 				'====BEGIN LICENSE KEY====\nXOfH/lnVASM6et4Co473t9jPIvhmQ/l0X3Ewog30VudX6GVkOB0n3oDx42NtADJ8HjYrhfXKSNu5EMRb5KzCLvMt/pu7xugjbvpyI1glE7Ha6E5VZwRpb4AC8T1KBF67FKAgaI7YFeOtPFROSCKrW5la38jbE5fo+q2N6wAfEti8la2ie6/7U2V+SdJPqkm/mLY/JBHdvDHoUduwe4zgqBUYLTNUgX6aKdlhpZPuHfj2SMeB/tcTJfH48rN1mgGkNkAT9ovROwI7ReLrdlHrHmJ1UwZZnAfxAC3ftIjgTEHsd/f+JrjW6t+kL6Ef1tT1eQ2DPFLJlhluTD91AsZMUg==||U2FsdGVkX1/SWWqU9YmxtM0T6Nm5mClKwqTaoF9wgZd9rNw2xs4hnY8Ilv8DZtFyNt92xym3eB6WA605N5llLm0D68EQtU9ci1rTEDopZ1ODzcqtTVSoFEloNPFSfW6LTIC9+2LSVBeeHXoLEQiLYHWihHu10Xll3KsH9iBObDACDm1PT7IV4uWvNpNeuKJc\npY3C5SG+3sHRX1aeMnHlKLhaIsOdw2IexjvMqocVpfRpX4wnsabNA0VJ3k95zUPS3vTtSegeDhwbl6j+/FZcGk9i+gAy6LuetlKuARjPYn2LH5Be3Ah+ggSBPlxf3JW9rtWNdUoFByHTcFlhzlU9HnpnBUrgcVMhCQ7SAjN9h2NMGmCr10Rn4OE0WtelNqYVig7KmENaPvFT+k2I0cYZ4KWwxxsQNKbjEAxJxrzK4HkaczCvyQbzj4Ppxx/0q+Cns44OeyWcwYD/vSaJm4Kptwpr+L4y5BoSO/WeqhSUQQ85nvOhtE0pSH/ZXYo3pqjPdQRfNm6NFeBl2lwTmZUEuw==\n====END LICENSE KEY====',
+=======
+				'====BEGIN LICENSE KEY====\njHOV/5KiW/bvzUVGHqeieWa9CkbO0/zlWmGA4gvtcwLMHVg7mTmKnI+LMtBAWrYFBf1CNvi77D0dPq9g6emBuOuKz076Hq6Dr7QLZNKvRz65CUGYbV7ctpKR1+X3Acad8dl1tGGTK3J5COFzlLfMYZA62DxgTeX45j0mChlWa0NypewxHFfEVPkVciHbXUpzk1zQXFeGwaFNez0+zRC7Np72lWoiEBhJAgNbJ2gee12uyyHeIzfYX3jR7YTzkNjtIrtvAH5ETlhGr8ROqPQB3UA0by5CpB3Qm8wvsXLAskG74t8zDl+2cXzMVIN+Xh0eQIHLmcl4KVm06Z9Wdkxa7A==||U2FsdGVkX18sqkXSD/vmKlKBpGFMo1zlFHlzO3mh8KdixyWXCdXRklvHGFAuEiL4kRgUmsKDTN/HS1sAz3Ox1Y+dAluLfpGpIjZX/P+Gi+E=\nRUG7gNure2XCGHmmqMXL+49yOiVrzZfvw2+62GJq+9oSkiiLajyMoDqfpEaaGATbKIvuUwLN5cn8p3S31MN4EVBIy0OZv/QPVnOYBgJo4c5ATCZJCP60WyyuEstlKn0kiFWyqnAsrXFIzd8s0hdrffnQsY8wXEQtY7dZ5XhqxwyWt38xcN8/1Q5twNIIa7vw2CKra0f6OxvKQKJXqcBU6DiTeTijrHlykjhuPFr3CPRE8XDfqJTWUMG8zEJ+5AGhFKn7IktVYR0LOy6mFKs9eXhLYen4lvo/RO/CCnMi+nLu/2pVtwNnvrbElKpG8wzBZ9I2JrZwtK9dWHNVSvKoGg==\n====END LICENSE KEY====',
+>>>>>>> Stashed changes
 			plugins: [TimelinePointer(), Selection(), ItemResizing(), ItemMovement()],
 			list: {
 				columns: {

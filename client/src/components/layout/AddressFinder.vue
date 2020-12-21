@@ -8,7 +8,7 @@
 				@changed="changed"
 				:provider="provider"
 			/>
-			<Button value="OK" @clicked="submit" />
+			<Button class="button" value="OK" @clicked="submit" />
 		</div>
 	</div>
 </template>
@@ -81,6 +81,10 @@ export default {
 
 .container {
 	display: flex;
+}
+
+.button {
+	margin-left: 2vh;
 }
 
 .controls-container {
