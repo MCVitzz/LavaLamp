@@ -54,7 +54,9 @@ export default {
 }
 
 .address-finder {
-	width: 50vh;
-	height: 80vh;
+	width: 100%;
+	max-width: 100%;
+	height: 30vh;
+	margin-bottom: 2vh;
 }
 </style>
