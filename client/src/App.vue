@@ -1,6 +1,6 @@
 <template>
 	<div id="app">
-		<Sidebar />
+		<Sidebar v-if="shouldShowSidebar" />
 		<router-view />
 	</div>
 </template>
@@ -10,6 +10,11 @@ export default {
 	name: 'App',
 	components: {
 		Sidebar,
+	},
+	computed: {
+		shouldShowSidebar() {
+			return this.$route.meta.sidebar !== false;
+		},
 	},
 };
 </script>

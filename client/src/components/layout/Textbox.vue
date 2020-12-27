@@ -1,19 +1,20 @@
 <template>
 	<input
 		ref="input"
-		type="text"
 		:value="value"
 		:placeholder="placeholder"
-		v-on:focus="onFocus"
-		v-on:blur="onBlur"
-		v-on:keyup="onKeyUp"
-		@change="change"
+		@focus="onFocus"
+		@blur="onBlur"
+		@keyup="onKeyUp"
+		@change="onChange"
+		@input="onInput"
+		:type="password ? 'password' : 'text'"
 	/>
 </template>
 <script>
 export default {
 	name: 'Textbox',
-	props: ['value', 'placeholder'],
+	props: ['value', 'placeholder', 'password'],
 	methods: {
 		focus: function() {
 			this.$nextTick(function() {
@@ -32,11 +33,14 @@ export default {
 		getValue: function() {
 			return this.$refs.input.value;
 		},
+		onChange: function($event) {
+			this.$emit('changed', $event);
+		},
+		onInput: function($event) {
+			this.$emit('input', $event.target.value);
+		},
 		empty: function() {
 			this.$refs.input.value = '';
-		},
-		change: function($event) {
-			this.$emit('changed', $event);
 		},
 	},
 };

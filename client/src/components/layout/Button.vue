@@ -8,7 +8,6 @@ export default {
 	props: ['value'],
 	methods: {
 		clicked: function() {
-			console.log('oi');
 			this.$emit('clicked');
 		},
 	},
@@ -25,6 +24,9 @@ button {
 	transition: ease-in-out 0.3s;
 	span {
 		margin-left: 1vh;
+	}
+	&:hover {
+		cursor: pointer;
 	}
 	&:focus {
 		outline: 0;

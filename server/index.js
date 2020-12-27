@@ -23,6 +23,7 @@ Database.setConnection({
 //Middleware
 app.use(bodyParser.json());
 app.use(cors());
+app.all('*', require('./verifyToken'));
 
 app.use('/api/members', require('./routes/memberRoute'));
 app.use('/api/tasks', require('./routes/taskRoute'));
@@ -31,6 +32,8 @@ app.use('/api/modules', require('./routes/moduleRoute'));
 app.use('/api/teams', require('./routes/teamRoute'));
 app.use('/api/addresses', require('./routes/addressRoute'));
 app.use('/api/teamUsers', require('./routes/teamUserRoute'));
+app.use('/api/projects', require('./routes/projectRoute'));
+app.use('/api/authentication', require('./routes/authenticationRoute'));
 
 // Production Environment
 app.use(serveStatic(__dirname + '/public'));

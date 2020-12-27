@@ -81,6 +81,7 @@ router.delete('/:id', async (req, res) => {
 
 router.get('/getByModule/:id', async (req, res) => {
     let moduleId = req.params.id;
+    console.log(req.user);
     if (moduleId) {
         try {
             let tasks = await Tasks.getByModule(moduleId);

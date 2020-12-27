@@ -1,11 +1,9 @@
 const Database = require('./database');
 const User = function (user) {
-    this.title = user.title;
-    this.user = user.user;
-    this.state = user.state;
-    this.dueDate = user.dueDate;
-    this.priority = user.priority;
-    this.owner = user.owner;
+    this.email = user.email;
+    this.firstName = user.firstName;
+    this.lastName = user.lastName;
+    this.password = user.password;
 };
 
 User.create = async (user) => {
@@ -27,6 +25,18 @@ User.getById = async (id) => {
         }
         else
             return 'Not Found';
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to SELECT from Users.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+User.getByEmail = async (email) => {
+    try {
+        let res = await Database.query('SELECT * FROM Users WHERE email = ?', email);
+        if (res.length) return res[0];
+        else return 'Not Found';
     }
     catch (err) {
         console.log('An errror has occured while trying to SELECT from Users.\n Dumping Stack.\n', err.stack);

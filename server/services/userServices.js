@@ -10,6 +10,10 @@ class UserServices {
         return await User.getById(id);
     }
 
+    static async getByEmail(email) {
+        return await User.getByEmail(email);
+    }
+
     static async getByTeam(team) {
         return await User.getByTeam(team);
     }

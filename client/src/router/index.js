@@ -7,6 +7,12 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
+    name: 'Welcome',
+    meta: { sidebar: false },
+    component: () => import('../views/Welcome.vue')
+  },
+  {
+    path: '/dashboard',
     name: 'Home',
     component: Home
   },
@@ -32,6 +38,18 @@ const routes = [
     path: '/testingGrid',
     name: 'TestingGrid',
     component: () => import('../views/TestingGrid.vue')
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    meta: { sidebar: false },
+    component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/register',
+    name: 'Register',
+    meta: { sidebar: false },
+    component: () => import('../views/Register.vue')
   }
 ]
 
