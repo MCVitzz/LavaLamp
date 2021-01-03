@@ -1,5 +1,5 @@
 <template>
-	<div class="container">
+	<div class="container" v-drag-and-drop:options="options">
 		<div class="add-button">
 			<IconTextButton icon="plus" text="Add Module" @click="addModule" />
 		</div>
@@ -47,8 +47,23 @@ export default {
 		IconButton,
 	},
 	data() {
+		const component = this;
+
 		return {
 			modules: [],
+			options: {
+				dropzoneSelector: '.module-container',
+				draggableSelector: '.row',
+				onDragend(event) {
+					// if you need to stop d&d
+					// event.stop();
+					console.log(event.droptarget);
+					// to detect if draggable element is dropped out
+					if (!event.droptarget) {
+						console.log('event is dropped out');
+					}
+				},
+			},
 		};
 	},
 	methods: {
@@ -79,6 +94,9 @@ export default {
 			if (res == 'OK') {
 				this.modules = await this.getModules();
 			} else alert(res);
+		},
+		someDummyMethod: function() {
+			console.log('Hello from someDummyMethod');
 		},
 	},
 	async created() {
