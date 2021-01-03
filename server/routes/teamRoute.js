@@ -1,21 +1,22 @@
 const express = require('express');
-const TeamSchema = require('../models/teamModel');
+const Teams = require('../services/teamServices');
 const router = express.Router();
 
 //Get all teams
 router.get('/', async (req, res) => {
-    let teams = await TeamSchema.find();
+    let teams = await Teams.getAll();
     if (!teams || teams.length == 0) res.send('No Teams.');
     else res.send(teams);
 });
 
 //Get team by id
-router.get('/getById/:id', async (req, res) => {
+router.get('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let team = await TeamSchema.findById(id);
-            res.send({ team });
+            let team = await Teams.getById(id);
+            if (!team.id) res.send('No Team found.');
+            else res.send(team);
         }
         catch (err) {
             res.status(400).send(err);
@@ -29,10 +30,8 @@ router.get('/getById/:id', async (req, res) => {
 //Add team
 router.post('/', async (req, res) => {
     try {
-        if (!req.body.state) req.body.state = 'Unassigned';
-        let team = new TeamSchema(req.body);
-        await team.save();
-        res.send('Team added successfully.');
+        let team = await Teams.create(req.body);
+        res.send(`Team created with Id ${team.id}.`);
     }
     catch (err) {
         res.status(400).send(err);
@@ -44,9 +43,9 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let updatedTeam = await TeamSchema.findOneAndUpdate({ _id: id }, req.body);
+            let updatedTeam = await Teams.update(id, req.body);
             if (updatedTeam) {
-                res.send('Team updated successfully.');
+                res.send(updatedTeam);
             }
             else {
                 res.status(400).send({ error: 'Could not update the team.' });
@@ -67,17 +66,15 @@ router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let deletedTeam = await TeamSchema.deleteOne({ _id: id });
-
-            if (deletedTeam.deletedCount) {
-                res.send('Team deleted successfully.');
-            }
+            let deletedTeam = await Teams.delete(id);
+            if (deletedTeam == 'Team deleted.')
+                res.send(deletedTeam);
             else {
-                res.status(400).send({ error: 'Could not delete the team.' });
+                res.status(400).send(deletedTeam);
             }
         }
         catch (err) {
-            res.send(err);
+            res.status(400).send(err);
         }
     }
     else {

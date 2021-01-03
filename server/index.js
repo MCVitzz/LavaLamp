@@ -1,10 +1,9 @@
 const express = require('express');
-const path = require('path');
 const serveStatic = require('serve-static');
 const bodyParser = require('body-parser');
 const cors = require('cors');
-const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const Database = require('./models/database');
 
 const app = express();
 
@@ -12,32 +11,30 @@ const app = express();
 const port = process.env.PORT || 5000;
 dotenv.config();
 
-//Config mongoose
-mongoose.set('useFindAndModify', false);
-
-//Connect to database
-mongoose.connect(
-    process.env.DB_CONNECT, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-}, (err) => {
-    if (err) {
-        console.error(err);
-        console.error('Could not connect to database, check log above');
-    }
-    else
-        console.log('Connected to Database');
+//Connect to Database
+Database.setConnection({
+    host: process.env.URL,
+    port: process.env.DB_PORT,
+    database: process.env.DB,
+    user: process.env.USER,
+    password: process.env.PASSWORD,
 });
 
 //Middleware
 app.use(bodyParser.json());
 app.use(cors());
+app.all('*', require('./verifyToken'));
 
 app.use('/api/members', require('./routes/memberRoute'));
 app.use('/api/tasks', require('./routes/taskRoute'));
 app.use('/api/users', require('./routes/userRoute'));
 app.use('/api/modules', require('./routes/moduleRoute'));
 app.use('/api/teams', require('./routes/teamRoute'));
+app.use('/api/addresses', require('./routes/addressRoute'));
+app.use('/api/teamUsers', require('./routes/teamUserRoute'));
+app.use('/api/projects', require('./routes/projectRoute'));
+app.use('/api/projectUsers', require('./routes/projectUserRoute'));
+app.use('/api/authentication', require('./routes/authenticationRoute'));
 
 // Production Environment
 app.use(serveStatic(__dirname + '/public'));

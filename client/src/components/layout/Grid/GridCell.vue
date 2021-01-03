@@ -45,7 +45,6 @@ export default {
 	components: { TextboxClickToEdit, Combobox, IconButton, Datepicker },
 	methods: {
 		changed: function(val) {
-			console.log('here');
 			this.$emit('changed', val);
 		},
 		click: function($event) {

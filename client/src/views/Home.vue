@@ -1,9 +1,22 @@
 <template>
-	<h1>Home</h1>
+	<HomeComponent class="main" />
 </template>
+<script>
+import HomeComponent from '../components/pages/home/HomeComponent';
+
+export default {
+	name: 'Home',
+	components: { HomeComponent },
+};
+</script>
 <style lang="scss" scoped>
-h1 {
-	margin: auto;
-	color: white;
+@import '@/global';
+
+.main {
+	width: 100%;
+	height: 100%;
+	max-width: 100%;
+	max-height: 100%;
+	overflow: hidden;
 }
 </style>

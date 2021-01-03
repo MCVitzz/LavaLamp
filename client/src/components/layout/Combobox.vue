@@ -62,6 +62,7 @@ export default {
 	background-color: $second-background-color;
 	padding: 1vh;
 	width: 50%;
+	min-width: fit-content;
 	//outline: 1px solid $background-color;
 	top: 50px;
 	left: -1vh;
@@ -75,6 +76,8 @@ export default {
 .dialog-item {
 	margin: 0.75vh;
 	padding: 1vh;
+	width: 100%;
+	overflow: hidden;
 	&:hover {
 		background: rgba(0, 0, 0, 0.5);
 		color: $text-color;

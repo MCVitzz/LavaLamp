@@ -82,6 +82,8 @@ export default {
 
 .body {
 	color: white;
+	overflow-y: scroll;
+	max-height: 450px;
 }
 
 .header {

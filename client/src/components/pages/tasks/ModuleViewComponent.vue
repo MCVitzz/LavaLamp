@@ -22,7 +22,7 @@
 					/>
 				</template>
 				<template v-slot:details
-					><TaskViewComponent class="tasks-container" :module="item._id"
+					><TaskViewComponent class="tasks-container" :module="item.id"
 				/></template>
 			</Collapsible>
 		</div>
@@ -140,5 +140,8 @@ export default {
 .container {
 	padding: 4vh;
 	width: 100%;
+	height: 100%;
+	max-height: 100%;
+	overflow-y: auto;
 }
 </style>

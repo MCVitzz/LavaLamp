@@ -1,15 +1,25 @@
 <template>
 	<div id="app">
-		<Sidebar />
-		<router-view />
+		<Sidebar v-if="shouldShowSidebar" />
+		<div class="container">
+			<UserComponent class="user" v-if="shouldShowSidebar" />
+			<router-view />
+		</div>
 	</div>
 </template>
 <script>
 import Sidebar from './components/pages/SidebarComponent.vue';
+import UserComponent from './components/pages/UserComponent.vue';
 export default {
 	name: 'App',
 	components: {
 		Sidebar,
+		UserComponent,
+	},
+	computed: {
+		shouldShowSidebar() {
+			return this.$route.meta.sidebar !== false;
+		},
 	},
 };
 </script>
@@ -18,6 +28,17 @@ export default {
 
 html {
 	background: $background-color;
+}
+
+.container {
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	max-width: 100%;
+}
+
+.user {
+	width: 100%;
 }
 
 #app {

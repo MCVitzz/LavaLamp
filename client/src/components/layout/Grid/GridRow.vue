@@ -51,7 +51,11 @@ export default {
 	},
 	methods: {
 		changed: function(val, item, property) {
-			this.$emit('changed', val, item, property);
+			let actualProperty = property;
+			if (property.indexOf('.') != -1) {
+				actualProperty = property.split('.')[0];
+			}
+			this.$emit('changed', val, item, actualProperty);
 		},
 		expand: function() {
 			this.expanded = !this.expanded;
@@ -87,5 +91,9 @@ export default {
 }
 .row {
 	border-bottom: 1px solid $second-background-color;
+}
+
+.main {
+	font-weight: bold;
 }
 </style>

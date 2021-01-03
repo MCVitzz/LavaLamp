@@ -27,10 +27,14 @@ import Textbox from '../../layout/Textbox';
 export default {
 	name: 'SelectUserComponent',
 	components: { Textbox },
-	props: ['value', 'changed'],
+	props: {
+		value: {},
+		changed: Function,
+		editable: { type: Boolean, default: true },
+	},
 	data() {
 		return {
-			val: this.value,
+			val: '',
 			expanded: false,
 			options: [],
 			fullContent: [],
@@ -41,17 +45,16 @@ export default {
 			return await UserServices.getAllUsers();
 		},
 		expand: function() {
-			this.expanded = true;
+			if (this.editable) this.expanded = true;
 		},
 		collapse: function() {
-			this.expanded = false;
+			if (this.editable) this.expanded = false;
 		},
 		changedVal: function(index) {
 			let user = this.options[index];
 			this.val = `${user.firstName} ${user.lastName}`;
 			this.collapse();
-			console.log(this.changed);
-			this.changed(user._id);
+			this.changed(user.id);
 		},
 		search: function($event) {
 			let value = $event.target.value;
@@ -66,13 +69,17 @@ export default {
 		},
 		adjustValue: function() {
 			if (this.value) {
-				let user = this.fullContent.find((el) => el._id == this.value);
+				let user = this.fullContent.find((el) => el.id == this.value);
 				this.val = `${user.firstName} ${user.lastName}`;
 			}
+		},
+		empty: function() {
+			this.val = '';
 		},
 	},
 	async created() {
 		this.fullContent = await this.getData();
+		this.val = this.value;
 		this.options = [...this.fullContent];
 		this.adjustValue();
 	},

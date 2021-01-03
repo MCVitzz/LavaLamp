@@ -56,7 +56,7 @@ class TaskServices {
     //Update Task
     static async updateTask(task) {
         try {
-            const res = await axios.put(`${url}/${task._id}`, task);
+            const res = await axios.put(`${url}/${task.id}`, task);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -72,7 +72,7 @@ class TaskServices {
     //Delete Task
     static async deleteTask(task) {
         try {
-            const res = await axios.delete(`${url}/${task._id}`);
+            const res = await axios.delete(`${url}/${task.id}`);
             if (res.status == 200) {
                 return 'OK';
             }

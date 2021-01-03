@@ -1,18 +1,80 @@
-const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
+const Database = require('./database');
+const Team = function (team) {
+    this.title = team.title;
+    this.team = team.team;
+    this.state = team.state;
+    this.dueDate = team.dueDate;
+    this.priority = team.priority;
+    this.owner = team.owner;
+};
 
-const teamSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true,
-        max: 255
-    },
-    description: {
-        type: String,
-    },
-    leader: {
-        type: Schema.Types.ObjectId,
-    },
-});
+Team.create = async (team) => {
+    try {
+        let res = await Database.query('INSERT INTO Teams SET ?', team);
+        return { id: res.insertId, ...team };
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to INSERT into Teams.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
 
-module.exports = mongoose.model('teams', teamSchema);
+Team.getById = async (id) => {
+    try {
+        let res = await Database.query('SELECT * FROM Teams WHERE id = ?', id);
+        if (res.length) {
+            return res[0];
+        }
+        else
+            return 'Not Found';
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to SELECT from Teams.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+Team.getAll = async () => {
+    try {
+        return await Database.query('SELECT * FROM Teams');
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to SELECT from Teams.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+Team.update = async (id, team) => {
+    try {
+        let keys = Object.keys(team);
+        let vals = Object.values(team);
+        let indexId = keys.indexOf('id');
+        keys.splice(indexId, 1);
+        vals.splice(indexId, 1);
+        let res = await Database.query('UPDATE Teams SET ' + keys.join(' = ? ,') + ' = ? WHERE id = ?', [...vals, id]);
+        if (res.affectedRows == 0)
+            return 'No Teams updated';
+        else
+            return 'Team updated.';
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to UPDATE Teams.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+Team.delete = async (id) => {
+    try {
+        let res = await Database.query('DELETE FROM Teams WHERE id = ?', id);
+        if (res.affectedRows == 0)
+            return 'No Teams deleted';
+        else
+            return 'Team deleted.';
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to DELETE Teams.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+module.exports = Team;

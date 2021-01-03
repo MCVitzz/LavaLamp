@@ -1,21 +1,22 @@
 const express = require('express');
-const UserSchema = require('../models/userModel');
+const Users = require('../services/userServices');
 const router = express.Router();
 
 //Get all users
 router.get('/', async (req, res) => {
-    let users = await UserSchema.find();
+    let users = await Users.getAll();
     if (!users || users.length == 0) res.send('No Users.');
     else res.send(users);
 });
 
-//Get user by id
-router.get('/getById/:id', async (req, res) => {
-    let id = req.params.id;
+//Get user by auth-token
+router.get('/self', async (req, res) => {
+    let id = req.user.id;
     if (id) {
         try {
-            let user = await UserSchema.findById(id);
-            res.send(user);
+            let user = await Users.getById(id);
+            if (!user.id) res.send('No User found.');
+            else res.send(user);
         }
         catch (err) {
             res.status(400).send(err);
@@ -26,12 +27,31 @@ router.get('/getById/:id', async (req, res) => {
     }
 });
 
-router.get('/getByTeam/:id', async (req, res) => {
+//Get user by id
+router.get('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let users = await UserSchema.find({ team: id });
-            if (users.length == 0) res.send('No Users.');
+            let user = await Users.getById(id);
+            if (!user.id) res.send('No User found.');
+            else res.send(user);
+        }
+        catch (err) {
+            res.status(400).send(err);
+        }
+    }
+    else {
+        res.status(400).send('User is missing ID.');
+    }
+});
+
+//Get by Team
+router.get('/getByTeam/:id', async (req, res) => {
+    let teamId = req.params.id;
+    if (teamId) {
+        try {
+            let users = await Users.getByTeam(teamId);
+            if (!users[0].id) res.send('No Users.');
             else res.send(users);
         }
         catch (err) {
@@ -39,16 +59,16 @@ router.get('/getByTeam/:id', async (req, res) => {
         }
     }
     else {
-        res.status.send('Team is missing ID.');
+        res.status(400).send('User is missing ID.');
     }
+
 });
 
 //Add user
 router.post('/', async (req, res) => {
     try {
-        let user = new UserSchema(req.body);
-        await user.save();
-        res.send('User added successfully.');
+        let user = await Users.create(req.body);
+        res.send(`User created with Id ${user.id}.`);
     }
     catch (err) {
         res.status(400).send(err);
@@ -60,9 +80,9 @@ router.put('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let updatedUser = await UserSchema.findOneAndUpdate({ _id: id }, req.body);
+            let updatedUser = await Users.update(id, req.body);
             if (updatedUser) {
-                res.send('User updated successfully.');
+                res.send(updatedUser);
             }
             else {
                 res.status(400).send({ error: 'Could not update the user.' });
@@ -83,14 +103,8 @@ router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let deletedUser = await UserSchema.deleteOne({ _id: id });
-
-            if (deletedUser.deletedCount) {
-                res.send('User deleted successfully.');
-            }
-            else {
-                res.status(400).send({ error: 'Could not delete the user.' });
-            }
+            let deletedUser = await Users.delete(id);
+            res.send(deletedUser);
         }
         catch (err) {
             res.send(err);
@@ -99,24 +113,6 @@ router.delete('/:id', async (req, res) => {
     else {
         res.status(400).send({ error: 'User is missing ID.' });
     }
-});
-
-router.get('/getByTeam/:id', async (req, res) => {
-    let teamId = req.params.id;
-    if (teamId) {
-        try {
-            let teams = await UserSchema.find({ team: teamId });
-            if (teams.length == 0) res.send('No Teams.');
-            else res.send(teams);
-        }
-        catch (err) {
-            res.status(400).send(err);
-        }
-    }
-    else {
-        res.status(400).send('Team is missing ID.');
-    }
-
 });
 
 //Export module

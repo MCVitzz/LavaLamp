@@ -23,7 +23,7 @@ class UserServices {
     //Get User by Id
     static async getById(id) {
         try {
-            let res = await axios.get(`${url}/getById/${id}`);
+            let res = await axios.get(`${url}/${id}`);
             let data = res.data;
             if (data != 'No Users.') {
                 return data;
@@ -35,6 +35,20 @@ class UserServices {
         return {};
     }
 
+    //Get User by auth-token
+    static async getSelf() {
+        try {
+            let res = await axios.get(`${url}/self`);
+            let data = res.data;
+            if (data) return data;
+        }
+        catch (err) {
+            console.error(err);
+        }
+        return {};
+    }
+
+    //Get User by Team
     static async getByTeam(id) {
         try {
             let res = await axios.get(`${url}/getByTeam/${id}`);
@@ -68,7 +82,7 @@ class UserServices {
     //Update User
     static async updateUser(user) {
         try {
-            const res = await axios.put(`${url}/${user._id}`, user);
+            const res = await axios.put(`${url}/${user.id}`, user);
             if (res.status == 200) {
                 return 'OK';
             }
@@ -84,7 +98,7 @@ class UserServices {
     //Delete User
     static async deleteUser(user) {
         try {
-            const res = await axios.delete(`${url}/${user._id}`);
+            const res = await axios.delete(`${url}/${user.id}`);
             if (res.status == 200) {
                 return 'OK';
             }
