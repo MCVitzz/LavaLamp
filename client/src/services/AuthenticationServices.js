@@ -25,6 +25,14 @@ class AuthenticationServices {
             return err.response.status == 400 ? err.response : { data: 'Something went wrong 😭, please try again later.' };
         }
     }
+
+    static async logout() {
+        sessionStorage.removeItem('auth-token');
+    }
+
+    static isLoggedIn() {
+        return sessionStorage.getItem('auth-token') != undefined;
+    }
 }
 
 export default AuthenticationServices;

@@ -9,6 +9,24 @@ router.get('/', async (req, res) => {
     else res.send(users);
 });
 
+//Get user by auth-token
+router.get('/self', async (req, res) => {
+    let id = req.user.id;
+    if (id) {
+        try {
+            let user = await Users.getById(id);
+            if (!user.id) res.send('No User found.');
+            else res.send(user);
+        }
+        catch (err) {
+            res.status(400).send(err);
+        }
+    }
+    else {
+        res.status(400).send('User is missing ID.');
+    }
+});
+
 //Get user by id
 router.get('/:id', async (req, res) => {
     let id = req.params.id;

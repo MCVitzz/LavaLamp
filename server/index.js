@@ -33,6 +33,7 @@ app.use('/api/teams', require('./routes/teamRoute'));
 app.use('/api/addresses', require('./routes/addressRoute'));
 app.use('/api/teamUsers', require('./routes/teamUserRoute'));
 app.use('/api/projects', require('./routes/projectRoute'));
+app.use('/api/projectUsers', require('./routes/projectUserRoute'));
 app.use('/api/authentication', require('./routes/authenticationRoute'));
 
 // Production Environment

@@ -7,6 +7,7 @@
 </template>
 
 <script>
+import AuthenticationServices from '../../../services/AuthenticationServices';
 import Button from '../../layout/Button';
 
 export default {
@@ -14,7 +15,9 @@ export default {
 	components: { Button },
 	methods: {
 		login: function() {
-			this.$router.push({ path: '/login' });
+			if (!AuthenticationServices.isLoggedIn())
+				this.$router.push({ path: '/login' });
+			else this.$router.push({ path: '/dashboard' });
 		},
 	},
 };

@@ -33,11 +33,7 @@ ProjectUser.getById = async (id) => {
 ProjectUser.getByProject = async (projectId) => {
     try {
         let res = await Database.query('SELECT * FROM ProjectUsers WHERE project = ?', projectId);
-        if (res.length) {
-            return res;
-        }
-        else
-            return 'Not Found';
+        return res;
     }
     catch (err) {
         console.log('An errror has occured while trying to SELECT from ProjectUsers.\n Dumping Stack.\n', err.stack);
@@ -48,11 +44,7 @@ ProjectUser.getByProject = async (projectId) => {
 ProjectUser.getByUser = async (userId) => {
     try {
         let res = await Database.query('SELECT * FROM ProjectUsers WHERE user = ?', userId);
-        if (res.length) {
-            return res;
-        }
-        else
-            return 'Not Found';
+        return res;
     }
     catch (err) {
         console.log('An errror has occured while trying to SELECT from ProjectUsers.\n Dumping Stack.\n', err.stack);

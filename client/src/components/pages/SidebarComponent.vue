@@ -1,7 +1,7 @@
 <template>
 	<div class="sidebar">
 		<div class="items">
-			<router-link to="/" class="item"
+			<router-link to="/dashboard" class="item"
 				><FontAwesome class="icon" icon="chart-line"
 			/></router-link>
 			<router-link to="/teams" class="item"

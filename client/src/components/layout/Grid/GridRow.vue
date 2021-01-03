@@ -92,4 +92,8 @@ export default {
 .row {
 	border-bottom: 1px solid $second-background-color;
 }
+
+.main {
+	font-weight: bold;
+}
 </style>

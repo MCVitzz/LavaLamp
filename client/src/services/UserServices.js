@@ -35,6 +35,20 @@ class UserServices {
         return {};
     }
 
+    //Get User by auth-token
+    static async getSelf() {
+        try {
+            let res = await axios.get(`${url}/self`);
+            let data = res.data;
+            if (data) return data;
+        }
+        catch (err) {
+            console.error(err);
+        }
+        return {};
+    }
+
+    //Get User by Team
     static async getByTeam(id) {
         try {
             let res = await axios.get(`${url}/getByTeam/${id}`);

@@ -1,5 +1,7 @@
 const express = require('express');
 const ProjectUsers = require('../services/projectUserServices');
+const Projects = require('../services/projectServices');
+const Users = require('../services/userServices');
 const router = express.Router();
 
 //Get all projectUsers
@@ -46,16 +48,20 @@ router.get('/getByProject/:projectId', async (req, res) => {
 });
 
 //Get projectUser by user
-router.get('/getByUser/:projectId', async (req, res) => {
+router.get('/getByUser/:userId/:deep?', async (req, res) => {
     let userId = req.params.userId;
+    let deep = req.params.deep;
     if (userId) {
         try {
-            let projectUser = await ProjectUsers.getByUser(userId);
-            if (!projectUser.length == 0) res.send('No Project User found.');
-            else res.send(projectUser);
+            let projectUsers = await ProjectUsers.getByUser(userId);
+            if (projectUsers.constructor != Array || projectUsers.length == 0) return res.send('No Project User found.');
+            if (deep) {
+                projectUsers = await goDeep(projectUsers);
+            }
+            res.send(projectUsers);
         }
         catch (err) {
-            res.status(400).send(err);
+            res.status(400).send(err.message);
         }
     }
     else {
@@ -113,6 +119,16 @@ router.delete('/:id', async (req, res) => {
         res.status(400).send({ error: 'Project User is missing ID.' });
     }
 });
+
+goDeep = async (projectUsers) => {
+    for (let projectUser of projectUsers) {
+        let project = await Projects.getById(projectUser.project);
+        let user = await Users.getById(projectUser.user);
+        projectUser.project = project;
+        projectUser.user = user;
+    }
+    return projectUsers;
+}
 
 //Export module
 module.exports = router;
