@@ -13,6 +13,7 @@ axios.interceptors.request.use(function (config) {
   return config;
 });
 
+document.title = 'Lava Lamp';
 
 Vue.config.productionTip = false;
 

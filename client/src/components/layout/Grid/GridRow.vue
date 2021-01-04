@@ -1,5 +1,5 @@
 <template>
-	<div :style="grid" class="row">
+	<div :style="grid" class="row" :aria-key="item.id">
 		<GridCell
 			color="white"
 			:property="{ control: 'iconbutton' }"

@@ -17,10 +17,6 @@ let gstc, state;
  * @returns { import("gantt-schedule-timeline-calendar").Rows }
  */
 function generateRows(data) {
-<<<<<<< HEAD
-	console.log(data);
-=======
->>>>>>> master
 	const rows = {};
 	for (let item of data) {
 		const id = GSTC.api.GSTCID(item.id.toString());

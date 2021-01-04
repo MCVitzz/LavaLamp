@@ -134,6 +134,9 @@ export default {
 				return ['Complete'];
 			}
 		},
+		refresh: async function() {
+			this.content = await this.getData();
+		},
 	},
 	async created() {
 		this.content = await this.getData();

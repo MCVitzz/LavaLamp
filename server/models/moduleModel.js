@@ -6,6 +6,7 @@ const Module = function (module) {
 
 Module.create = async (module) => {
     try {
+        module.project = 1;
         let res = await Database.query('INSERT INTO Modules SET ?', module);
         return { id: res.insertId, ...module };
     }

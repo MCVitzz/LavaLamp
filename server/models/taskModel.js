@@ -2,10 +2,12 @@ const Database = require('./database');
 const Task = function (task) {
     this.title = task.title;
     this.module = task.module;
-    this.state = task.state;
     this.dueDate = task.dueDate;
-    this.priority = task.priority;
     this.owner = task.owner;
+    this.teamOwner = task.teamOwner;
+    this.priority = task.priority;
+    this.state = task.state;
+    this.address = task.address;
 };
 
 Task.create = async (task) => {

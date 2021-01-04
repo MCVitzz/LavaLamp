@@ -3,7 +3,12 @@
 		<div class="add-button">
 			<IconTextButton icon="plus" text="Add Module" @click="addModule" />
 		</div>
-		<div class="module-container" v-for="(item, index) in modules" :key="index">
+		<div
+			class="module-container"
+			v-for="(item, index) in modules"
+			:aria-key="item.id"
+			:key="index"
+		>
 			<Collapsible
 				:value="!item.collapsed"
 				@changed="changedCollapse(item, $event)"
@@ -22,7 +27,10 @@
 					/>
 				</template>
 				<template v-slot:details
-					><TaskViewComponent class="tasks-container" :module="item.id"
+					><TaskViewComponent
+						class="tasks-container"
+						:ref="`module ${item.id}`"
+						:module="item.id"
 				/></template>
 			</Collapsible>
 		</div>
@@ -36,6 +44,7 @@ import IconButton from '../../layout/IconButton';
 import IconTextButton from '../../layout/IconTextButton';
 import ModuleServices from '../../../services/ModuleServices';
 import TaskViewComponent from './TaskViewComponent';
+import TaskServices from '../../../services/TaskServices';
 
 export default {
 	name: 'ModuleViewComponent',
@@ -54,14 +63,16 @@ export default {
 			options: {
 				dropzoneSelector: '.module-container',
 				draggableSelector: '.row',
+				showDropzoneAreas: false,
+				multipleDropzonesItemsDraggingEnabled: false,
 				onDragend(event) {
-					// if you need to stop d&d
-					// event.stop();
-					console.log(event.droptarget);
-					// to detect if draggable element is dropped out
+					console.log(event);
 					if (!event.droptarget) {
-						console.log('event is dropped out');
+						return;
 					}
+					let newModule = event.droptarget.getAttribute('aria-key');
+					let task = event.items[0].getAttribute('aria-key');
+					component.moveTask(task, newModule);
 				},
 			},
 		};
@@ -81,6 +92,7 @@ export default {
 		},
 		addModule: async function() {
 			let res = await ModuleServices.addModule('');
+			console.log(res);
 			if (res == 'OK') {
 				this.modules = await this.getModules();
 				this.$nextTick(function() {
@@ -95,8 +107,24 @@ export default {
 				this.modules = await this.getModules();
 			} else alert(res);
 		},
-		someDummyMethod: function() {
-			console.log('Hello from someDummyMethod');
+		moveTask: async function(task, destination) {
+			task = await TaskServices.getById(task);
+
+			if (task.module == destination) return;
+
+			const ogModule = task.module;
+			task.module = destination;
+			let res = await TaskServices.updateTask(task);
+
+			if (res == 'OK') {
+				let view = this.$refs[`module ${destination}`][0];
+				let ogView = this.$refs[`module ${ogModule}`][0];
+				view.refresh();
+				ogView.refresh();
+				this.$toasted.global.success({
+					message: '😎 Task Moved!',
+				});
+			}
 		},
 	},
 	async created() {
