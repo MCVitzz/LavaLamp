@@ -7,9 +7,6 @@
 <script>
 import GSTC from 'gantt-schedule-timeline-calendar';
 import { Plugin as TimelinePointer } from 'gantt-schedule-timeline-calendar/dist/plugins/timeline-pointer.esm.min.js';
-import { Plugin as Selection } from 'gantt-schedule-timeline-calendar/dist/plugins/selection.esm.min.js';
-import { Plugin as ItemResizing } from 'gantt-schedule-timeline-calendar/dist/plugins/item-resizing.esm.min.js';
-import { Plugin as ItemMovement } from 'gantt-schedule-timeline-calendar/dist/plugins/item-movement.esm.min.js';
 import 'gantt-schedule-timeline-calendar/dist/style.css';
 let gstc, state;
 // helper functions
@@ -33,6 +30,7 @@ function generateRows(data) {
 function generateItems(data) {
 	const items = {};
 	for (let item of data) {
+		if (!item.dueDate) item.dueDate = new Date();
 		const id = GSTC.api.GSTCID(item.id.toString());
 		const rowId = GSTC.api.GSTCID(item.id);
 		let start = GSTC.api.date(item.dueDate).subtract(7, 'day');
@@ -60,7 +58,7 @@ export default {
 		const config = {
 			licenseKey:
 				'====BEGIN LICENSE KEY====\njHOV/5KiW/bvzUVGHqeieWa9CkbO0/zlWmGA4gvtcwLMHVg7mTmKnI+LMtBAWrYFBf1CNvi77D0dPq9g6emBuOuKz076Hq6Dr7QLZNKvRz65CUGYbV7ctpKR1+X3Acad8dl1tGGTK3J5COFzlLfMYZA62DxgTeX45j0mChlWa0NypewxHFfEVPkVciHbXUpzk1zQXFeGwaFNez0+zRC7Np72lWoiEBhJAgNbJ2gee12uyyHeIzfYX3jR7YTzkNjtIrtvAH5ETlhGr8ROqPQB3UA0by5CpB3Qm8wvsXLAskG74t8zDl+2cXzMVIN+Xh0eQIHLmcl4KVm06Z9Wdkxa7A==||U2FsdGVkX18sqkXSD/vmKlKBpGFMo1zlFHlzO3mh8KdixyWXCdXRklvHGFAuEiL4kRgUmsKDTN/HS1sAz3Ox1Y+dAluLfpGpIjZX/P+Gi+E=\nRUG7gNure2XCGHmmqMXL+49yOiVrzZfvw2+62GJq+9oSkiiLajyMoDqfpEaaGATbKIvuUwLN5cn8p3S31MN4EVBIy0OZv/QPVnOYBgJo4c5ATCZJCP60WyyuEstlKn0kiFWyqnAsrXFIzd8s0hdrffnQsY8wXEQtY7dZ5XhqxwyWt38xcN8/1Q5twNIIa7vw2CKra0f6OxvKQKJXqcBU6DiTeTijrHlykjhuPFr3CPRE8XDfqJTWUMG8zEJ+5AGhFKn7IktVYR0LOy6mFKs9eXhLYen4lvo/RO/CCnMi+nLu/2pVtwNnvrbElKpG8wzBZ9I2JrZwtK9dWHNVSvKoGg==\n====END LICENSE KEY====',
-			plugins: [TimelinePointer(), Selection(), ItemResizing(), ItemMovement()],
+			plugins: [TimelinePointer()],
 			list: {
 				columns: {
 					data: {
@@ -85,6 +83,7 @@ export default {
 			element: this.$refs.gstc,
 			state,
 		});
+		console.log(GSTC.api.stateFromConfig(config));
 	},
 	beforeUnmount() {
 		if (gstc) gstc.destroy();

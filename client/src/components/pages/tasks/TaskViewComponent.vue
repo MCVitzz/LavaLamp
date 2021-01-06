@@ -7,6 +7,7 @@
 				/></template>
 				<template name="detail" v-slot="{ item }">
 					<TaskDetailComponent
+						class="detail-container"
 						:stateButton="newStateButton"
 						:task="item"
 						@changed="changed"

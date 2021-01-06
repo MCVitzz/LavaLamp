@@ -4,6 +4,7 @@ const Task = function (task) {
     this.module = task.module;
     this.dueDate = task.dueDate;
     this.owner = task.owner;
+    this.approver = task.approver;
     this.teamOwner = task.teamOwner;
     this.priority = task.priority;
     this.state = task.state;
