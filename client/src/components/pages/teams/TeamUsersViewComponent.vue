@@ -16,7 +16,6 @@
 </template>
 
 <script>
-import TeamUserServices from '../../../services/TeamUsersServices';
 import TeamUsersServices from '../../../services/TeamUsersServices';
 import Grid from '../../layout/Grid/Grid';
 import SelectUserComponent from '../users/SelectUserComponent';
@@ -61,7 +60,7 @@ export default {
 					message: 'The user is already part of the team!',
 				});
 			} else {
-				TeamUserServices.addTeamUser(user, this.team);
+				TeamUsersServices.addTeamUser(user, this.team);
 				this.$toasted.global.success({
 					message: '😎 User added to the team!',
 				});

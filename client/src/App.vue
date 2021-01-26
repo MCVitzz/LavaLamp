@@ -1,44 +1,34 @@
 <template>
 	<div id="app">
-		<Sidebar v-if="shouldShowSidebar" />
-		<div class="container">
-			<UserComponent class="user" v-if="shouldShowSidebar" />
-			<router-view />
-		</div>
+		<MasterPageComponent :key="key" @redraw="forceUpdate">
+			<router-view :key="key" @redraw="forceUpdate" />
+		</MasterPageComponent>
 	</div>
 </template>
 <script>
-import Sidebar from './components/pages/SidebarComponent.vue';
-import UserComponent from './components/pages/UserComponent.vue';
+import MasterPageComponent from './components/pages/master/MasterPageComponent';
+
 export default {
 	name: 'App',
-	components: {
-		Sidebar,
-		UserComponent,
+	data() {
+		return {
+			key: 1, //When changed causes a force update
+		};
 	},
-	computed: {
-		shouldShowSidebar() {
-			return this.$route.meta.sidebar !== false;
+	methods: {
+		forceUpdate: function() {
+			console.log('Force update');
+			this.key++;
 		},
 	},
+	components: { MasterPageComponent },
 };
 </script>
 <style lang="scss">
-@import './global';
+@import '@/global';
 
 html {
 	background: $background-color;
-}
-
-.container {
-	display: flex;
-	flex-direction: column;
-	width: 100%;
-	max-width: 100%;
-}
-
-.user {
-	width: 100%;
 }
 
 #app {

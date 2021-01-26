@@ -1,4 +1,5 @@
 import axios from 'axios';
+import ProjectUserServices from './ProjectUserServices';
 
 const url = '/api/authentication';
 
@@ -10,6 +11,10 @@ class AuthenticationServices {
                 password: password,
             });
             sessionStorage.setItem('auth-token', res.data);
+            let current = await ProjectUserServices.getCurrentForUser();
+            if (current.project) {
+                sessionStorage.setItem('current-project', current.project);
+            }
             return true;
         }
         catch (error) {
@@ -28,10 +33,15 @@ class AuthenticationServices {
 
     static async logout() {
         sessionStorage.removeItem('auth-token');
+        sessionStorage.removeItem('current-project');
     }
 
     static isLoggedIn() {
         return sessionStorage.getItem('auth-token') != undefined;
+    }
+
+    static changeCurrentProject(newProject) {
+        sessionStorage.setItem('current-project', newProject);
     }
 }
 

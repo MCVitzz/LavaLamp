@@ -11,6 +11,47 @@ router.get('/', async (req, res) => {
     else res.send(projectUsers);
 });
 
+//Get projectUser by project
+router.get('/getCurrentForUser', async (req, res) => {
+    let userId = req.user.id;
+    if (userId) {
+        try {
+            let projectUsers = await ProjectUsers.getCurrentForUser(userId);
+            if (projectUsers.length == 0) res.send('No current Project.');
+            else {
+                res.send(projectUsers[0]);
+            }
+        }
+        catch (err) {
+            res.status(400).send(err);
+        }
+    }
+    else {
+        res.status(400).send('Project User is missing ID.');
+    }
+});
+
+//Get projectUser by current User
+router.get('/getByCurrentUser', async (req, res) => {
+    let userId = req.user.id;
+    if (userId) {
+        try {
+            let projectUsers = await ProjectUsers.getByUser(userId);
+            if (projectUsers.length == 0) res.send('No ProjectUsers.');
+            else {
+                projectUsers = await goDeep(projectUsers);
+                res.send(projectUsers);
+            }
+        }
+        catch (err) {
+            res.status(400).send(err);
+        }
+    }
+    else {
+        res.status(400).send('Project User is missing ID.');
+    }
+});
+
 //Get projectUser by id
 router.get('/:id', async (req, res) => {
     let id = req.params.id;
@@ -30,16 +71,20 @@ router.get('/:id', async (req, res) => {
 });
 
 //Get projectUser by project
-router.get('/getByProject/:projectId', async (req, res) => {
+router.get('/getByProject/:projectId/:deep?', async (req, res) => {
     let projectId = req.params.projectId;
+    let deep = req.params.deep;
     if (projectId) {
         try {
             let projectUsers = await ProjectUsers.getByProject(projectId);
             if (projectUsers.length == 0) res.send('No Project User found.');
-            else res.send(projectUser);
+            else {
+                if (deep) projectUsers = await goDeep(projectUsers);
+                res.send(projectUsers);
+            }
         }
         catch (err) {
-            res.status(400).send(err);
+            res.status(400).send(err.message);
         }
     }
     else {
@@ -103,6 +148,33 @@ router.put('/:id', async (req, res) => {
     }
 });
 
+
+//Update projectUser
+router.put('/setCurrent/:newProjectId', async (req, res) => {
+    let newProjectId = req.params.newProjectId;
+    let user = req.user.id;
+    if (newProjectId) {
+        try {
+            await ProjectUsers.setAllToCurrentProjectFalse(user);
+            let updatedProjectUser = await ProjectUsers.setCurrent(user, newProjectId);
+            if (updatedProjectUser) {
+                res.send(updatedProjectUser);
+            }
+            else {
+                res.status(400).send({ error: 'Could not update the Project User.' });
+            }
+        }
+        catch (err) {
+            console.log(err);
+            res.status(400).send(err);
+        }
+    }
+    else {
+        res.status(400).send({ error: 'Project User is missing ID.' });
+    }
+});
+
+
 //Delete projectUser
 router.delete('/:id', async (req, res) => {
     let id = req.params.id;
@@ -121,11 +193,19 @@ router.delete('/:id', async (req, res) => {
 });
 
 goDeep = async (projectUsers) => {
-    for (let projectUser of projectUsers) {
-        let project = await Projects.getById(projectUser.project);
-        let user = await Users.getById(projectUser.user);
-        projectUser.project = project;
-        projectUser.user = user;
+    if (Array.isArray(projectUsers)) {
+        for (let projectUser of projectUsers) {
+            let project = await Projects.getById(projectUser.project);
+            let user = await Users.getById(projectUser.user);
+            projectUser.project = project;
+            projectUser.user = user;
+        }
+    }
+    else {
+        let project = await Projects.getById(projectUsers.project);
+        let user = await Users.getById(projectUsers.user);
+        projectUsers.project = project;
+        projectUsers.user = user;
     }
     return projectUsers;
 }

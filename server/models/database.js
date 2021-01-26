@@ -27,6 +27,13 @@ class Database {
         console.log(sql);
     }
 
+    static end() {
+        this.connection.end(function (err) {
+            if (err) throw err;
+            process.exit();
+        });
+    }
+
     static async __config(conn) {
         this.query = await promisify(conn.query).bind(conn);
     }

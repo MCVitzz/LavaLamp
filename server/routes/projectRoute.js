@@ -1,5 +1,7 @@
 const express = require('express');
+const Modules = require('../services/moduleServices');
 const Projects = require('../services/projectServices');
+const ProjectUsers = require('../services/projectUserServices');
 const router = express.Router();
 
 //Get all projects
@@ -30,7 +32,10 @@ router.get('/:id', async (req, res) => {
 //Add project
 router.post('/', async (req, res) => {
     try {
+        req.body.owner = req.user.id;
         let project = await Projects.create(req.body);
+        await ProjectUsers.setAllToCurrentProjectFalse(req.user.id);
+        await ProjectUsers.create({ project: project.id, user: req.user.id, isCurrent: 1 });
         res.send(`Project created with Id ${project.id}.`);
     }
     catch (err) {
@@ -66,8 +71,14 @@ router.delete('/:id', async (req, res) => {
     let id = req.params.id;
     if (id) {
         try {
-            let deletedProject = await Projects.delete(id);
-            res.send(deletedProject);
+            let project = await Projects.getById(id);
+            if (project.owner == req.user.id) {
+                let deletedProject = await Projects.delete(id);
+                res.send(deletedProject);
+            }
+            else {
+                res.status(403).send({ error: "You don't have permission to delete this project" });
+            }
         }
         catch (err) {
             res.send(err);

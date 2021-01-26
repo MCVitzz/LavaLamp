@@ -20,10 +20,26 @@ class ModuleServices {
         }
     }
 
+    //Get Modules by Project
+    static async getByCurrentProject() {
+        let project = sessionStorage.getItem('current-project');
+        try {
+            let res = await axios.get(`${url}/getByProject/${project}`);
+            let data = res.data;
+            if (data != 'No Modules.') {
+                return data;
+            }
+        }
+        catch (err) {
+            console.error(err);
+            return [];
+        }
+    }
+
     //Add Module
     static async addModule(module) {
         try {
-            const res = await axios.post(url, { 'title': module, collapsed: true });
+            const res = await axios.post(url, { title: module, project: sessionStorage.getItem('current-project'), collapsed: true });
             if (res.status == 200) {
                 return 'OK';
             }

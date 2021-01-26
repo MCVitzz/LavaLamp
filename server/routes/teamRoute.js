@@ -1,3 +1,4 @@
+const { compareSync } = require('bcryptjs');
 const express = require('express');
 const Teams = require('../services/teamServices');
 const router = express.Router();
@@ -7,6 +8,24 @@ router.get('/', async (req, res) => {
     let teams = await Teams.getAll();
     if (!teams || teams.length == 0) res.send('No Teams.');
     else res.send(teams);
+});
+
+//Get team by project
+router.get('/getByProject/:projectId', async (req, res) => {
+    let projectId = req.params.projectId;
+    if (projectId) {
+        try {
+            let teams = await Teams.getByProject(projectId);
+            if (teams.length == 0) res.send('No Team found.');
+            else res.send(teams);
+        }
+        catch (err) {
+            res.status(400).send(err);
+        }
+    }
+    else {
+        res.status(400).send('Project is missing ID.');
+    }
 });
 
 //Get team by id

@@ -11,13 +11,15 @@
 			:key="index"
 			@changed="changed($event, item, property.name)"
 			:value="getValue(item, property)"
+			:item="item"
 			:property="property"
 			:class="property.main ? 'main' : ''"
 		>
-			<template v-slot="{ changedFunction, value }">
+			<template v-slot="{ changedFunction, item, value }">
 				<slot
 					name="custom"
 					:value="value"
+					:item="item"
 					:changedFunction="changedFunction"
 				></slot>
 			</template>
@@ -89,6 +91,7 @@ export default {
 .detail {
 	grid-column: 1 / -1;
 }
+
 .row {
 	border-bottom: 1px solid $second-background-color;
 }

@@ -1,7 +1,9 @@
 const Database = require('./database');
 const ProjectUser = function (projectUser) {
-    this.title = projectUser.title;
-    this.description = projectUser.description;
+    this.project = projectUser.project;
+    this.user = projectUser.user;
+    this.role = projectUser.role;
+    this.isCurrent = projectUser.isCurrent;
 };
 
 ProjectUser.create = async (projectUser) => {
@@ -62,6 +64,45 @@ ProjectUser.getAll = async () => {
     }
 };
 
+ProjectUser.getCurrentForUser = async (user) => {
+    try {
+        return await Database.query('SELECT * FROM ProjectUsers WHERE user = ? AND isCurrent = 1', user);
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to SELECT from ProjectUsers.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+ProjectUser.setCurrent = async (user, project) => {
+    try {
+        let res = await Database.query('UPDATE ProjectUsers SET isCurrent = 1 WHERE user = ? AND project = ?', [user, project]);
+        if (res.affectedRows == 0)
+            return 'No ProjectUsers updated';
+        else
+            return 'ProjectUser updated.';
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to UPDATE ProjectUsers.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+}
+
+
+ProjectUser.setAllToCurrentProjectFalse = async (user) => {
+    try {
+        let res = await Database.query('UPDATE ProjectUsers SET isCurrent = 0 WHERE user = ?', user);
+        if (res.affectedRows == 0)
+            return 'No ProjectUsers updated';
+        else
+            return 'ProjectUser updated.';
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to UPDATE ProjectUsers.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+}
+
 ProjectUser.update = async (id, projectUser) => {
     try {
         let keys = Object.keys(projectUser);
@@ -90,6 +131,20 @@ ProjectUser.delete = async (id) => {
             return 'No ProjectUsers deleted';
         else
             return 'ProjectUser deleted.';
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to DELETE ProjectUsers.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+ProjectUser.deleteByProject = async (project) => {
+    try {
+        let res = await Database.query('DELETE FROM ProjectUsers WHERE project = ?', project);
+        if (res.affectedRows == 0)
+            return 'No ProjectUsers deleted';
+        else
+            return 'ProjectUsers deleted.';
     }
     catch (err) {
         console.log('An errror has occured while trying to DELETE ProjectUsers.\n Dumping Stack.\n', err.stack);

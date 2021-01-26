@@ -2,6 +2,7 @@ const Database = require('./database');
 const Project = function (project) {
     this.title = project.title;
     this.description = project.description;
+    this.owner = project.owner;
 };
 
 Project.create = async (project) => {

@@ -1,11 +1,10 @@
 const Database = require('./database');
 const Team = function (team) {
-    this.title = team.title;
-    this.team = team.team;
-    this.state = team.state;
-    this.dueDate = team.dueDate;
-    this.priority = team.priority;
-    this.owner = team.owner;
+    this.id = team.id;
+    this.name = team.name;
+    this.project = team.project;
+    this.description = team.description;
+    this.leader = team.leader;
 };
 
 Team.create = async (team) => {
@@ -37,6 +36,16 @@ Team.getById = async (id) => {
 Team.getAll = async () => {
     try {
         return await Database.query('SELECT * FROM Teams');
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to SELECT from Teams.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+Team.getByProject = async (project) => {
+    try {
+        return await Database.query('SELECT * FROM Teams WHERE project = ?', project);
     }
     catch (err) {
         console.log('An errror has occured while trying to SELECT from Teams.\n Dumping Stack.\n', err.stack);

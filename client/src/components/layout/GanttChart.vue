@@ -83,7 +83,6 @@ export default {
 			element: this.$refs.gstc,
 			state,
 		});
-		console.log(GSTC.api.stateFromConfig(config));
 	},
 	beforeUnmount() {
 		if (gstc) gstc.destroy();

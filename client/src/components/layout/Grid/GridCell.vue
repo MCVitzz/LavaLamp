@@ -29,7 +29,7 @@
 			:model="value"
 		/>
 		<div v-else-if="property.control == 'custom'">
-			<slot :changedFunction="changed" :value="value"></slot>
+			<slot :item="item" :changedFunction="changed" :value="value"></slot>
 		</div>
 	</div>
 </template>
@@ -41,7 +41,7 @@ import Combobox from '../Combobox';
 
 export default {
 	name: 'GridCell',
-	props: ['property', 'value', 'icon', 'color'],
+	props: ['item', 'property', 'value', 'icon', 'color'],
 	components: { TextboxClickToEdit, Combobox, IconButton, Datepicker },
 	methods: {
 		changed: function(val) {

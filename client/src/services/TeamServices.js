@@ -10,7 +10,23 @@ class TeamServices {
         try {
             let res = await axios.get(url);
             let data = res.data;
-            if (data != 'No Teams.') {
+            if (res.status == 200) {
+                return data;
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+        return [];
+    }
+
+    //Get teams by Project
+    static async getByProject(project) {
+
+        try {
+            let res = await axios.get(`${url}/getByProject/${project}`);
+            let data = res.data;
+            if (res.status == 200) {
                 return data;
             }
         }
@@ -18,12 +34,19 @@ class TeamServices {
             console.error(err);
             return [];
         }
+        return [];
+    }
+
+    //Get teams by Project
+    static async getByCurrentProject() {
+        let project = sessionStorage.getItem('current-project');
+        return await this.getByProject(project);
     }
 
     //Add Team
     static async addTeam(team) {
         try {
-            const res = await axios.post(`${url}`, { 'name': team });
+            const res = await axios.post(`${url}`, { name: team, project: sessionStorage.getItem('current-project') });
             if (res.status == 200) {
                 return 'OK';
             }

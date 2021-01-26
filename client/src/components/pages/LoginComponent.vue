@@ -36,6 +36,7 @@ export default {
 					this.password
 				);
 				if (token) {
+					this.$emit('redraw');
 					this.$toasted.global.success({
 						message: '😎 Logged in. Welcome back!',
 					});

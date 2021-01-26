@@ -21,7 +21,7 @@
 </template>
 
 <script>
-import UserServices from '../../../services/UserServices';
+import ProjectUserServices from '../../../services/ProjectUserServices';
 import Textbox from '../../layout/Textbox';
 
 export default {
@@ -42,7 +42,7 @@ export default {
 	},
 	methods: {
 		getData: async function() {
-			return await UserServices.getAllUsers();
+			return await ProjectUserServices.getByCurrentProjectDeep();
 		},
 		expand: function() {
 			if (this.editable) this.expanded = true;
@@ -76,9 +76,16 @@ export default {
 		empty: function() {
 			this.val = '';
 		},
+		parseData: function(data) {
+			let newData = [];
+			for (let item of data) {
+				newData.push(item.user);
+			}
+			return newData;
+		},
 	},
 	async created() {
-		this.fullContent = await this.getData();
+		this.fullContent = this.parseData(await this.getData());
 		this.val = this.value;
 		this.options = [...this.fullContent];
 		this.adjustValue();

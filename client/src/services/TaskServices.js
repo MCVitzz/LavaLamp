@@ -22,6 +22,21 @@ class TaskServices {
         }
     }
 
+    static async getTasksForCurrentProject() {
+        let currentProject = sessionStorage.getItem('current-project');
+        try {
+            let res = await axios.get(`${url}/getByProject/${currentProject}`);
+            let data = res.data;
+            if (data != 'No Tasks.') {
+                return data;
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+        return [];
+    }
+
     //Get Task by Id
     static async getById(id) {
         try {

@@ -19,7 +19,7 @@ export default {
 	},
 	methods: {
 		getGanttData: async function() {
-			return await TaskServices.getAllTasks();
+			return await TaskServices.getTasksForCurrentProject();
 		},
 	},
 	async created() {

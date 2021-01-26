@@ -10,6 +10,10 @@ class TeamServices {
         return await Team.getById(id);
     }
 
+    static async getByProject(project) {
+        return await Team.getByProject(project);
+    }
+
     static async create(team) {
         return await Team.create(team);
     }

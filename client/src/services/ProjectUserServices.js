@@ -11,14 +11,14 @@ class ProjectUserServices {
         try {
             let res = await axios.get(url);
             let data = res.data;
-            if (data != 'No ProjectUsers.') {
+            if (res.status == 200) {
                 return data;
             }
         }
         catch (err) {
             console.error(err);
-            return [];
         }
+        return [];
     }
 
     //Get ProjectUser by Id
@@ -26,7 +26,7 @@ class ProjectUserServices {
         try {
             let res = await axios.get(`${url}/${userId}/${projectId}`);
             let data = res.data;
-            if (data != 'No ProjectUsers.') {
+            if (res.status == 200) {
                 return data;
             }
         }
@@ -36,12 +36,74 @@ class ProjectUserServices {
         return {};
     }
 
-    //Get ProjectUser by Project
-    static async getByProject(id) {
+    //Set current User's Project
+    static async setCurrentProject(newProject) {
         try {
-            let res = await axios.get(`${url}/getByProject/${id}`);
+            let res = await axios.put(`${url}/setCurrent/${newProject}`);
+            if (res.status == 200) {
+                sessionStorage.setItem('current-project', newProject);
+                return 'OK';
+            }
+            else {
+                return res;
+            }
+        }
+        catch (err) {
+            console.log(err);
+        }
+    }
+
+    //Get ProjectUser by Project
+    static async getCurrentForUser() {
+        try {
+            let res = await axios.get(`${url}/getCurrentForUser`);
             let data = res.data;
-            if (data != 'No ProjectUsers.') {
+            if (res.status == 200) {
+                return data;
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+        return [];
+    }
+
+    //Get ProjectUser by Project
+    static async getByProject(id, deep) {
+        try {
+            let reqUrl = `${url}/getByProject/${id}`;
+            if (deep) reqUrl += '/deep';
+            let res = await axios.get(reqUrl);
+            let data = res.data;
+            if (res.status == 200) {
+                return data;
+            }
+        }
+        catch (err) {
+            console.error(err);
+        }
+        return [];
+    }
+
+    //Get by current Project
+    static async getByCurrentProject() {
+        let project = sessionStorage.getItem('current-project');
+        return await this.getByProject(project);
+    }
+
+    //Get by current Project
+    static async getByCurrentProjectDeep() {
+        let project = sessionStorage.getItem('current-project');
+        return await this.getByProject(project, true);
+    }
+
+
+    //Get ProjectUser by Current User
+    static async getByCurrentUser() {
+        try {
+            let res = await axios.get(`${url}/getByCurrentUser`);
+            let data = res.data;
+            if (res.status == 200) {
                 return data;
             }
         }
@@ -56,7 +118,7 @@ class ProjectUserServices {
         try {
             let res = await axios.get(`${url}/getByUser/${id}/${deep ?? 'deep'}`);
             let data = res.data;
-            if (data != 'No ProjectUsers.') {
+            if (res.status == 200) {
                 return data;
             }
         }

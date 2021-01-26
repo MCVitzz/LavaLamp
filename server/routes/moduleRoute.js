@@ -19,7 +19,25 @@ router.get('/:id', async (req, res) => {
             else res.send(module);
         }
         catch (err) {
-            res.status(400).send(err);
+            res.status(400).send(err.message);
+        }
+    }
+    else {
+        res.status(400).send('Module is missing ID.');
+    }
+});
+
+//Get Modules by Project
+router.get('/getByProject/:projectId', async (req, res) => {
+    let projectId = req.params.projectId;
+    if (projectId) {
+        try {
+            let modules = await Modules.getByProject(projectId);
+            if (modules.length == 0) res.send('No Module found.');
+            else res.send(modules);
+        }
+        catch (err) {
+            res.status(400).send(err.message);
         }
     }
     else {

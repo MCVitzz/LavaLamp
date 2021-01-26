@@ -62,7 +62,7 @@ export default {
 			this.content = await this.getData();
 		},
 		getData: async function() {
-			let data = await TeamServices.getAllTeams();
+			let data = await TeamServices.getByCurrentProject();
 			return data;
 		},
 		txtKeyUp: function($event) {
@@ -101,6 +101,9 @@ export default {
 	max-height: 100%;
 	width: 100%;
 	padding: 4vh;
+	display: flex;
+	flex-direction: column;
+	margin: 0;
 }
 .input {
 	width: 100%;

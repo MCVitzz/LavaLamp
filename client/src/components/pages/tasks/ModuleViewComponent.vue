@@ -79,7 +79,7 @@ export default {
 	},
 	methods: {
 		getModules: async function() {
-			let data = await ModuleServices.getAllModules();
+			let data = await ModuleServices.getByCurrentProject();
 			return data;
 		},
 		changed: function(item, $event) {
@@ -171,5 +171,7 @@ export default {
 	height: 100%;
 	max-height: 100%;
 	overflow-y: auto;
+	display: flex;
+	flex-direction: column;
 }
 </style>

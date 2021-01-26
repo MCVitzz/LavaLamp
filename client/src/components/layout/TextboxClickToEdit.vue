@@ -57,7 +57,6 @@ p {
 	cursor: pointer;
 	padding: 1vh;
 	margin: 1vh;
-	height: 100%;
 	width: 100%;
 	text-align: left;
 	&:hover {

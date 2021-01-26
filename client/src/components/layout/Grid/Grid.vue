@@ -16,8 +16,9 @@
 				:chosen="chosen"
 				@changed="changed"
 			>
-				<template v-slot:custom="{ changedFunction, value }"
+				<template v-slot:custom="{ item, changedFunction, value }"
 					><slot
+						:item="item"
 						:value="value"
 						:changedFunction="changedFunction"
 						name="custom"
@@ -82,7 +83,7 @@ export default {
 
 .body {
 	color: white;
-	overflow-y: scroll;
+	overflow-y: auto;
 	max-height: 450px;
 }
 
@@ -97,7 +98,6 @@ export default {
 }
 
 .grid-container {
-	margin: auto;
 	width: 100%;
 }
 </style>

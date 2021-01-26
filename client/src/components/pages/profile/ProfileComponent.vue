@@ -5,21 +5,23 @@
 			<div class="line">&nbsp;</div>
 			<div class="info">
 				<p class="user name">{{ `${user.firstName} ${user.lastName}` }}</p>
-				<p class="user email">{{ user.email }}</p>
+				<a class="user email" :href="`mailto:${user.email}`">{{
+					user.email
+				}}</a>
 			</div>
 		</div>
 		<h1>Projects</h1>
-		<UserProjectsViewComponent :user="getUser()" v-if="ready" />
+		<ProjectUsersViewComponent :user="user" v-if="ready" />
 	</div>
 </template>
 
 <script>
 import UserServices from '../../../services/UserServices';
-import UserProjectsViewComponent from './UserProjectsViewComponent';
+import ProjectUsersViewComponent from './ProjectUsersViewComponent';
 
 export default {
 	name: 'ProfileComponent',
-	components: { UserProjectsViewComponent },
+	components: { ProjectUsersViewComponent },
 	data() {
 		return {
 			user: {},
@@ -33,8 +35,6 @@ export default {
 	},
 	async created() {
 		this.user = await this.getUser();
-	},
-	mounted() {
 		this.ready = true;
 	},
 };
@@ -74,6 +74,10 @@ h1 {
 
 .email {
 	margin-top: 1vh;
+	text-decoration: none;
+	&:hover {
+		color: orangered;
+	}
 }
 
 .info {

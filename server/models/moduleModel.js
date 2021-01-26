@@ -31,6 +31,16 @@ Module.getById = async (id) => {
     }
 };
 
+Module.getByProject = async (project) => {
+    try {
+        return await Database.query('SELECT * FROM Modules WHERE project = ?', project);
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to SELECT from Modules.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
 Module.getAll = async () => {
     try {
         return await Database.query('SELECT * FROM Modules');
@@ -59,6 +69,7 @@ Module.update = async (id, module) => {
         return err.message;
     }
 };
+
 Module.delete = async (id) => {
     try {
         let res = await Database.query('DELETE FROM Modules WHERE id = ?', id);
@@ -66,6 +77,21 @@ Module.delete = async (id) => {
             return 'No Modules deleted';
         else
             return 'Module deleted.';
+    }
+    catch (err) {
+        console.log('An errror has occured while trying to DELETE Modules.\n Dumping Stack.\n', err.stack);
+        return err.message;
+    }
+};
+
+
+Module.deleteByProject = async (project) => {
+    try {
+        let res = await Database.query('DELETE FROM Modules WHERE project = ?', project);
+        if (res.affectedRows == 0)
+            return 'No Modules deleted';
+        else
+            return 'Modules deleted.';
     }
     catch (err) {
         console.log('An errror has occured while trying to DELETE Modules.\n Dumping Stack.\n', err.stack);

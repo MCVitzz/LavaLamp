@@ -21,6 +21,14 @@ class ModuleServices {
     static async update(id, module) {
         return await Module.update(id, module);
     }
+
+    static async getByProject(project) {
+        return await Module.getByProject(project);
+    }
+
+    static async deleteByProject(project) {
+        return await Module.deleteByProject(project);
+    }
 }
 
 module.exports = ModuleServices;

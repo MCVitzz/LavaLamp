@@ -24,16 +24,16 @@
 						text="Delete"
 						@click="deleteTask(item)"
 					/>
-					<Button
-						v-for="(value, index) in getValue()"
-						:key="index"
-						class="button"
-						:value="value"
-						@clicked="stateChange(value)"
-					/>
 				</div>
 			</Tab>
 		</Tabs>
+		<Button
+			v-for="(value, index) in getValue()"
+			:key="index"
+			class="button"
+			:value="value"
+			@clicked="stateChange(value)"
+		/>
 	</div>
 </template>
 

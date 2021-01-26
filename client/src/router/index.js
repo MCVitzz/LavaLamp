@@ -27,11 +27,13 @@ const routes = [
   {
     path: '/tasks',
     name: 'Tasks',
+    meta: { title: 'Tasks' },
     component: () => import('../views/Tasks.vue')
   },
   {
     path: '/teams',
     name: 'teams',
+    meta: { title: 'Teams' },
     component: () => import('../views/Teams.vue')
   },
   {
@@ -56,6 +58,12 @@ const routes = [
     name: 'Profile',
     meta: { sidebar: true },
     component: () => import('../views/Profile.vue')
+  },
+  {
+    path: '/newProject',
+    name: 'New Project',
+    meta: { sidebar: false },
+    component: () => import('../views/NewProject.vue')
   }
 ]
 

@@ -1,5 +1,5 @@
 <template>
-	<LoginComponent />
+	<LoginComponent @redraw="$emit('redraw')" />
 </template>
 
 <script>

@@ -18,6 +18,7 @@ Database.setConnection({
     database: process.env.DB,
     user: process.env.USER,
     password: process.env.PASSWORD,
+    connectionLimit: 10,
 });
 
 //Middleware
@@ -39,4 +40,15 @@ app.use('/api/authentication', require('./routes/authenticationRoute'));
 // Production Environment
 app.use(serveStatic(__dirname + '/public'));
 
-app.listen(port, () => console.log(`Server started on port ${port}`));
+app.listen(port, () => console.log(`Server listening on port ${port}.`));
+
+
+end = () =>
+    server.close(function (err) {
+        if (err) throw err;
+        console.log('Server stopped.');
+        Database.end();
+    });
+
+process.once('SIGTERM', end);
+process.once('SIGINT', end);

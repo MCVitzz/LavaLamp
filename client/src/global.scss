@@ -15,6 +15,14 @@ $text-color: #fdfdfd;
 	width: 100%;
 }
 
+.bold {
+	font-weight: bold;
+}
+
+.a-color {
+	color:orangered;
+}
+
 .btn-primary {
 	margin: 1vh 1vh 1vh 0vh;
 	padding: 1vh 2vh;
@@ -29,7 +37,7 @@ $text-color: #fdfdfd;
 	padding: 0;
 	box-sizing: border-box;
 	font-family: Montserrat, Avenir, Helvetica, Arial, sans-serif;
-
+	
 	&::selection {
 		color: black;
 		background-color: orange;

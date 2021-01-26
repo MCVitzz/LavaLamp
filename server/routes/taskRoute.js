@@ -1,5 +1,6 @@
 const express = require('express');
 const Tasks = require('../services/taskServices');
+const Modules = require('../services/ModuleServices');
 const router = express.Router();
 
 //Get all tasks
@@ -89,6 +90,29 @@ router.get('/getByModule/:id', async (req, res) => {
         }
         catch (err) {
             res.status(400).send(err);
+        }
+    }
+    else {
+        res.status(400).send('Module is missing ID.');
+    }
+
+});
+
+router.get('/getByProject/:id', async (req, res) => {
+    let projectId = req.params.id;
+    if (projectId) {
+        try {
+            let modules = await Modules.getByProject(projectId);
+            let tasks = [];
+            for (let module of modules) {
+                tasks.push(...await Tasks.getByModule(module.id));
+            }
+            if (tasks.length == 0) res.send('No Tasks.');
+            else res.send(tasks);
+        }
+        catch (err) {
+            console.error(err);
+            res.status(400).send(err.message);
         }
     }
     else {

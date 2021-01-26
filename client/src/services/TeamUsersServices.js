@@ -11,7 +11,7 @@ class TeamUserServices {
         try {
             let res = await axios.get(url);
             let data = res.data;
-            if (data != 'No TeamUsers.') {
+            if (res.status == 200) {
                 return data;
             }
         }
@@ -26,7 +26,7 @@ class TeamUserServices {
         try {
             let res = await axios.get(`${url}/${userId}/${teamId}`);
             let data = res.data;
-            if (data != 'No TeamUsers.') {
+            if (res.status == 200) {
                 return data;
             }
         }
@@ -41,7 +41,7 @@ class TeamUserServices {
         try {
             let res = await axios.get(`${url}/getByTeam/${id}`);
             let data = res.data;
-            if (data != 'No TeamUsers.') {
+            if (res.status == 200) {
                 return data;
             }
         }
@@ -56,7 +56,7 @@ class TeamUserServices {
         try {
             let res = await axios.get(`${url}/getByUser/${id}`);
             let data = res.data;
-            if (data != 'No TeamUsers.') {
+            if (res.status == 200) {
                 return data;
             }
         }
