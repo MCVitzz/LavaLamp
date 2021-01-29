@@ -1,6 +1,6 @@
 const express = require('express');
 const Tasks = require('../services/taskServices');
-const Modules = require('../services/ModuleServices');
+const Modules = require('../services/moduleServices');
 const router = express.Router();
 
 //Get all tasks
