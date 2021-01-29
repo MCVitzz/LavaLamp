@@ -9,6 +9,7 @@
 				:provider="provider"
 			/>
 			<Button class="button" value="OK" @clicked="submit" />
+			<Button class="button" value="Get Route" @clicked="getRoute" />
 		</div>
 	</div>
 </template>
@@ -51,6 +52,9 @@ export default {
 				}
 				this.$emit('changed', address.id);
 			}
+		},
+		getRoute: async function() {
+			this.$refs.map.setRoute();
 		},
 		parseResults: function(results) {
 			let parsed = [];

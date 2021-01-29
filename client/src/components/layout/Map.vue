@@ -18,6 +18,7 @@ import { latLng, Icon } from 'leaflet';
 import { LMap, LTileLayer, LMarker } from 'vue2-leaflet';
 import { OpenStreetMapProvider } from 'leaflet-geosearch';
 import 'leaflet/dist/leaflet.css';
+import 'leaflet-routing-machine';
 
 export default {
 	name: 'Map',
@@ -48,6 +49,16 @@ export default {
 			this.center = latLng(y, x);
 			this.zoom = 18;
 		},
+		setRoute: function() {
+			if (!('geolocation' in navigator))
+				throw new Error('Geolocation is not available in the current browser.');
+			let pos;
+			navigator.geolocation.getCurrentPosition((p) => (pos = p));
+			this.L.Routing.control({
+				waypoints: [this.center, latLng(pos.latitude, pos.longitude)],
+				routeWhileDragging: true,
+			}).addTo(this.$refs.map);
+		},
 	},
 	async created() {
 		delete Icon.Default.prototype._getIconUrl;
@@ -58,6 +69,9 @@ export default {
 		});
 		this.provider = new OpenStreetMapProvider();
 		this.zoom = 18;
+	},
+	mounted() {
+		this.L = this.$refs.map.mapObject;
 	},
 };
 </script>
