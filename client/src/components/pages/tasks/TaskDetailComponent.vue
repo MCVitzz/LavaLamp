@@ -26,7 +26,7 @@
 			</Tab>
 			<Tab title="Map">
 				<div>
-					<AddressFinder
+					<BaseAddress
 						class="address-finder"
 						@changed="changeAddress"
 						:address="task.address"
@@ -38,7 +38,7 @@
 </template>
 
 <script>
-import AddressFinder from '../../layout/AddressFinder';
+import BaseAddress from '../../layout/BaseAddress';
 import IconTextButton from '../../layout/IconTextButton';
 import SelectUserComponent from '../users/SelectUserComponent';
 import Button from '../../layout/Button';
@@ -48,7 +48,7 @@ import Tab from '../../layout/Tabs/Tab';
 export default {
 	name: 'TaskDetailComponent',
 	components: {
-		AddressFinder,
+		BaseAddress,
 		IconTextButton,
 		Button,
 		SelectUserComponent,

@@ -1,5 +1,9 @@
 <template>
 	<div class="container">
+		<link
+			href="https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css"
+			rel="stylesheet"
+		/>
 		<LMap
 			ref="map"
 			@update:center="centerUpdate"
@@ -34,6 +38,8 @@ export default {
 			attribution:
 				'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
 			provider: '',
+			mapboxToken:
+				'sk.eyJ1IjoibWN2aXR6eiIsImEiOiJja2tyMWw0cnowMDgwMm9waTBpdHR4cHE1In0.9X5ECopp6l-CqAYpyjmEsQ',
 		};
 	},
 	methods: {
@@ -54,10 +60,12 @@ export default {
 				throw new Error('Geolocation is not available in the current browser.');
 			let pos;
 			navigator.geolocation.getCurrentPosition((p) => (pos = p));
-			this.L.Routing.control({
-				waypoints: [this.center, latLng(pos.latitude, pos.longitude)],
-				routeWhileDragging: true,
-			}).addTo(this.$refs.map);
+			console.log(pos);
+			// this.$nextTick(() => {
+			// 	this.$refs.map.mapObject.Routing.control({
+			// 		router: L.routing.mapbox(this.mapboxToken),
+			// 	});
+			// });
 		},
 	},
 	async created() {
