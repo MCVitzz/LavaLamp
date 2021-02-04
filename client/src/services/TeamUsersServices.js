@@ -41,7 +41,7 @@ class TeamUserServices {
         try {
             let res = await axios.get(`${url}/getByTeam/${id}`);
             let data = res.data;
-            if (res.status == 200) {
+            if (res.data != 'No TeamUsers.') {
                 return data;
             }
         }

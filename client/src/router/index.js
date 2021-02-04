@@ -8,7 +8,7 @@ const routes = [
   {
     path: '/',
     name: 'Welcome',
-    meta: { sidebar: false, guest: true, },
+    meta: { sidebar: false },
     component: () => import('../views/Welcome.vue')
   },
   {
@@ -44,13 +44,13 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    meta: { sidebar: false, guest: true, },
+    meta: { sidebar: false },
     component: () => import('../views/Login.vue')
   },
   {
     path: '/register',
     name: 'Register',
-    meta: { sidebar: false, guest: true, },
+    meta: { sidebar: false },
     component: () => import('../views/Register.vue')
   },
   {

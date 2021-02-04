@@ -13,19 +13,19 @@ axios.interceptors.request.use(function (config) {
   return config;
 });
 
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.guest)) {
-    if (sessionStorage.getItem('auth-token') == null) {
-      next({
-        path: '/login',
-        params: {
-          nextUrl: to.fullPath
-        }
-      });
-    }
-  }
-}
-);
+// router.beforeEach((to, from, next) => {
+//   if (to.matched.some(record => record.meta.guest)) {
+//     if (sessionStorage.getItem('auth-token') == null) {
+//       next({
+//         path: '/login',
+//         params: {
+//           nextUrl: to.fullPath
+//         }
+//       });
+//     }
+//   }
+// }
+// );
 
 document.title = 'Lava Lamp';
 

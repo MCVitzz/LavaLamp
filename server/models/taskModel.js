@@ -39,6 +39,7 @@ Task.getById = async (id) => {
 
 Task.getByModule = async (module) => {
     try {
+        console.log(module);
         let res = await Database.query('SELECT * FROM Tasks WHERE Module = ?', module);
         if (res.length) {
             return res;

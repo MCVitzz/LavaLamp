@@ -10,6 +10,19 @@
 						:changed="changeApprover"
 					/>
 				</div>
+				<IconTextButton
+					class="button"
+					icon="trash-alt"
+					text="Delete"
+					@click="deleteTask(item)"
+				/>
+				<Button
+					v-for="(value, index) in getValue()"
+					:key="index"
+					class="button"
+					:value="value"
+					@clicked="stateChange(value)"
+				/>
 			</Tab>
 			<Tab title="Map">
 				<div>
@@ -18,22 +31,9 @@
 						@changed="changeAddress"
 						:address="task.address"
 					/>
-					<IconTextButton
-						class="button"
-						icon="trash-alt"
-						text="Delete"
-						@click="deleteTask(item)"
-					/>
 				</div>
 			</Tab>
 		</Tabs>
-		<Button
-			v-for="(value, index) in getValue()"
-			:key="index"
-			class="button"
-			:value="value"
-			@clicked="stateChange(value)"
-		/>
 	</div>
 </template>
 
@@ -82,7 +82,7 @@ export default {
 @import '@/global';
 
 .button {
-	margin-left: 2vh;
+	margin-right: 2vh;
 }
 
 .address-finder {
