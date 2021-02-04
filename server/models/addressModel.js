@@ -48,6 +48,7 @@ Address.update = async (id, address) => {
     try {
         let keys = Object.keys(address);
         let vals = Object.values(address);
+        console.log(address);
         let indexId = keys.indexOf('id');
         keys.splice(indexId, 1);
         vals.splice(indexId, 1);
