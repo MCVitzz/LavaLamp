@@ -45,25 +45,6 @@ router.get('/:id', async (req, res) => {
     }
 });
 
-//Get by Team
-router.get('/getByTeam/:id', async (req, res) => {
-    let teamId = req.params.id;
-    if (teamId) {
-        try {
-            let users = await Users.getByTeam(teamId);
-            if (!users[0].id) res.send('No Users.');
-            else res.send(users);
-        }
-        catch (err) {
-            res.status(400).send(err);
-        }
-    }
-    else {
-        res.status(400).send('User is missing ID.');
-    }
-
-});
-
 //Add user
 router.post('/', async (req, res) => {
     try {

@@ -52,24 +52,6 @@ router.get('/getByCurrentUser', async (req, res) => {
     }
 });
 
-//Get projectUser by id
-router.get('/:id', async (req, res) => {
-    let id = req.params.id;
-    if (id) {
-        try {
-            let projectUser = await ProjectUsers.getById(id);
-            if (!projectUser.id) res.send('No Project User found.');
-            else res.send(projectUser);
-        }
-        catch (err) {
-            res.status(400).send(err);
-        }
-    }
-    else {
-        res.status(400).send('Project User is missing ID.');
-    }
-});
-
 //Get projectUser by project
 router.get('/getByProject/:projectId/:deep?', async (req, res) => {
     let projectId = req.params.projectId;
